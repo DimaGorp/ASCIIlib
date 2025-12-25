@@ -1,9 +1,3 @@
-//
-//  ASKII.cpp
-//  ASKII_SFML
-//
-//  Created by Dell on 20.01.2023.
-//
 
 #include "ASKII.hpp"
 #include <math.h>
