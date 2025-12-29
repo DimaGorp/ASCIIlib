@@ -1,7 +1,18 @@
-cmake_minimum_required(VERSION 3.28)
+cmake_minimum_required(VERSION 4.2.0)
 
-project(ASKIIlib)
+project(ASKIIlib
+    #Choosen Language
+    LANGUAGES CXX
+    )
 
-add_subdirectory(conf)
+#Load Config Vars
+include("cmake/ASKIIlibConfig.cmake")
 
-add_subdirectory(${EXAMPLES_DIR})
+#Build
+if(${BUILD_EXAMPLES})
+    #Examples
+    add_subdirectory(${EXAMPLES_DIR})
+elseif(${BUILD_TESTS})
+    #Tests
+    add_subdirectory(${TESTS_DIR})
+endif()
