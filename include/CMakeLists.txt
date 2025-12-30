@@ -1,0 +1,4 @@
+﻿set(INCLUDES 
+    "${INCLUDE_DIR}/ASKII.hpp"
+    PARENT_SCOPE
+)

@@ -1,0 +1,4 @@
+﻿set(SOURCES
+     "${SOURCE_DIR}/ASKII.cpp"
+     PARENT_SCOPE
+)

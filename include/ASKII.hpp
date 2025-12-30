@@ -1,6 +1,17 @@
 
 #pragma once 
 
+
+
+#ifdef _WIN32
+    #ifdef ASKII_EXPORTS
+        #define ASKII_API __declspec(dllexport)
+    #else
+        #define ASKII_API __declspec(dllimport)
+    #endif
+#else
+    #define ASKII_API
+#endif
 #include <iostream>
 #include <fstream>
 #include <cstring>
@@ -14,7 +25,7 @@ int boundedPixelValue(sf::Color color,float brightnessFactor);
 }*/
 
 namespace askii {
-    class ASKII_ALGORITHM{
+    class ASKII_API ASKII_ALGORITHM{
         std::string *image_string;
         std::ofstream file;
         void convert_to_gray();
