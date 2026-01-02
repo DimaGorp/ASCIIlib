@@ -1,0 +1,10 @@
+{
+	"InstallScripts" : 
+	[
+		"D:/CPP/ASKII_Lib/cmake_install.cmake",
+		"D:/CPP/ASKII_Lib/src/cmake_install.cmake",
+		"D:/CPP/ASKII_Lib/examples/cmake_install.cmake",
+		"D:/CPP/ASKII_Lib/examples/ConsoleAppUsage/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

@@ -2,15 +2,16 @@ cmake_minimum_required(VERSION 4.2.0)
 
 #Load Config Vars
 include("cmake/ASKIIlibConfig.cmake")
-
-
+#Check if we are Building in Source
+if(PROJECT_SOURCE_DIR STREQUAL PROJECT_BINARY_DIR)
+    message(FATAL_ERROR "In-source builds are not allowed")
+endif()
 project(ASKIIlib
     #Choosen Language
     LANGUAGES ${PROJECT_LANGUAGES}
     )
 
-#Combine headers and Sources
-add_subdirectory(${INCLUDE_DIR})
+#Collect Sources
 add_subdirectory(${SOURCE_DIR})
 
 add_library(${PROJECT_NAME} ${LIB_LINK_TYPE} ${SOURCES})

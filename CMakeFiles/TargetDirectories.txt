@@ -1,0 +1,5 @@
+D:/CPP/ASKII_Lib/CMakeFiles/ASKIIlib.dir
+D:/CPP/ASKII_Lib/CMakeFiles/ALL_BUILD.dir
+D:/CPP/ASKII_Lib/CMakeFiles/ZERO_CHECK.dir
+D:/CPP/ASKII_Lib/examples/ConsoleAppUsage/CMakeFiles/ConsoleApp.dir
+D:/CPP/ASKII_Lib/examples/ConsoleAppUsage/CMakeFiles/ALL_BUILD.dir
