@@ -20,15 +20,13 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #Disable Compiler Standart and Use only C++ Standart
 set(CMAKE_CXX_EXTENSIONS OFF)
-
+#Disable in Source Build
+set(CMAKE_DISABLE_SOURCE_CHANGES ON)
+set(CMAKE_DISABLE_IN_SOURCE_BUILD ON)
 #options for Building externals 
 option(BUILD_EXAMPLES "Build Examples" ON)
 option(BUILD_TESTS "Build Tests" ON)
-#option for LIBRARY linkage building
-option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
 
-
-message(STATUS "BUIDING FOR SHARED LIBS: ${BUILD_SHARED_LIBS}")
 #Choosing link type for library
 if(${BUILD_SHARED_LIBS})
    set(LIB_LINK_TYPE SHARED)
