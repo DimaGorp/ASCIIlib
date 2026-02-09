@@ -1,5 +1,4 @@
-cmake_minimum_required(VERSION 4.2.0)
-
+cmake_minimum_required(VERSION 3.28.2[...4.2.0])
 
 #Library Directories
 set(INCLUDE_DIR "${CMAKE_SOURCE_DIR}/include")
