@@ -1,15 +1,21 @@
 ﻿set(FETCHCONTENT_BASE_DIR ${CMAKE_BINARY_DIR}/examples/deps)
 include(FetchContent)
 
-find_package(SFML 3 QUIET COMPONENTS graphics)
+find_package(SFML 3.0.2 QUIET COMPONENTS graphics)
 if(NOT SFML_FOUND)
-    message(STATUS "SFML not found - downloading dependency")
+    message(STATUS "SFML 3.0.2 not found - downloading dependency")
     FetchContent_Declare(
     SFML
     GIT_REPOSITORY https://github.com/SFML/SFML.git
     GIT_TAG 3.0.2
     )
+    #Set options for SFML
     set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
+    set(SFML_BUILD_AUDIO OFF CACHE BOOL "" FORCE)
+    set(SFML_BUILD_NETWORK OFF CACHE BOOL "" FORCE)
+    set(SFML_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+    set(SFML_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+    set(SFML_BUILD_DOC OFF CACHE BOOL "" FORCE)
     FetchContent_MakeAvailable(SFML)
     set(SFML_FOUND TRUE PARENT_SCOPE)
 else()

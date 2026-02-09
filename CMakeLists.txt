@@ -22,6 +22,12 @@ message(STATUS "Building tests: ${BUILD_TESTS}")
 if(PROJECT_SOURCE_DIR STREQUAL PROJECT_BINARY_DIR)
     message(FATAL_ERROR "In-source builds are not allowed")
 endif()
+
+#Set up Build Type
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Release
+        CACHE STRING "Choose the type of build (Debug or Release)" FORCE)
+endif()
 #Set the project name and languages
 project(ASCIIlib LANGUAGES CXX)
 
