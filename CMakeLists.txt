@@ -29,22 +29,25 @@ if(NOT CMAKE_BUILD_TYPE)
         CACHE STRING "Choose the type of build (Debug or Release)" FORCE)
 endif()
 #Set the project name and languages
-project(ASCIIlib LANGUAGES CXX)
+project(ASCIIlib 
+            VERSION 1.0.0
+            LANGUAGES CXX
+        )
 
-#Collect Sources
-add_subdirectory(${SOURCE_DIR})
 
 #Build
 if(${BUILD_EXAMPLES})
+    message(STATUS "Building examples...")
     #Examples
     add_subdirectory(${EXAMPLES_DIR})
 elseif(${BUILD_TESTS})
+    message(STATUS "Building tests...")
     #Tests
     add_subdirectory(${TESTS_DIR})
 endif()
 
-#Make a library
-add_library(${PROJECT_NAME} ${SOURCES})
+#Collect Sources and make a library and its components
+add_subdirectory(${SOURCE_DIR})
 #Create an alias for the library
 add_library(ASCII::ASCIIlib ALIAS ${PROJECT_NAME})
 
@@ -56,22 +59,61 @@ set_target_properties(${PROJECT_NAME}
                         CMAKE_CXX_EXTENSIONS OFF
 )
 
-target_include_directories(${PROJECT_NAME} PRIVATE 
-                    "$<BUILD_INTERFACE:${INCLUDE_DIR}>"
-                    "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"
+#include directories for the library
+target_include_directories(${PROJECT_NAME} 
+                    PUBLIC 
+                        $<BUILD_INTERFACE:${INCLUDE_DIR}>
+                        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+                    PRIVATE
+                        ${SOURCE_DIR}
                     )
-#install library
-include(GNUInstallDirs) 
 
+
+#install and export library
+
+#install the header files
+install(FILES ${INCLUDE_DIR}/ASKII.hpp
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}
+)
+#install the library
 install(TARGETS ${PROJECT_NAME}
-        EXPORT ${PROJECT_NAME}-targets
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-)
+        EXPORT ASCII 
+        DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
-install(EXPORT ${PROJECT_NAME}-targets
-        FILE ${PROJECT_NAME}-targets.cmake
+#Export the library for use with find_package
+install(EXPORT ASCII
+        FILE ASCIIConfig.cmake
         NAMESPACE ASCII::
-        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/ASCIIlib
 )
 
+
+
+
+
+
+
+
+
+
+
+
+#[[
+
+#Packaging
+include(InstallRequiredSystemLibraries)
+set(CPACK_PACKAGE_NAME "ASCIIlib")
+set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/LICENSE")
+set(CPACK_PACKAGE_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")
+set(CPACK_PACKAGE_VERSION_MINOR "${PROJECT_VERSION_MINOR}")
+set(CPACK_PACKAGE_VERSION_PATCH "${PROJECT_VERSION_PATCH}")
+set(CPACK_PACKAGE_CONTACT "dgorpinuk50@gmail.com")
+if(APPLE)
+    set(CPACK_GENERATOR "DragNDrop;TGZ")
+elseif(WIN32)
+    set(CPACK_GENERATOR "ZIP;NSIS")
+else()
+    set(CPACK_GENERATOR "TGZ;DEB")
+endif()
+include(CPack)
+]]
