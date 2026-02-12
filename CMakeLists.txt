@@ -58,7 +58,7 @@ set_target_properties(${PROJECT_NAME}
                         CMAKE_CXX_STANDARD_REQUIRED ON
                         CMAKE_CXX_EXTENSIONS OFF
 )
-
+include(GNUInstallDirs)
 #include directories for the library
 target_include_directories(${PROJECT_NAME} 
                     PUBLIC 
@@ -67,7 +67,6 @@ target_include_directories(${PROJECT_NAME}
                     PRIVATE
                         ${SOURCE_DIR}
                     )
-
 
 #install and export library
 
@@ -78,7 +77,10 @@ install(FILES ${INCLUDE_DIR}/ASKII.hpp
 #install the library
 install(TARGETS ${PROJECT_NAME}
         EXPORT ASCII 
-        DESTINATION ${CMAKE_INSTALL_LIBDIR})
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
 
 #Export the library for use with find_package
 install(EXPORT ASCII
