@@ -1,12 +1,6 @@
 name: Build.yml
-
 on:
-  workflow_dispatch:
-  push:
-    branches: [master,develop]
-  pull_request:
-    branches: [master,develop]
-
+  workflow_call:
 jobs:
   build:
     runs-on: ${{ matrix.os }}

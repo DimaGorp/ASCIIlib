@@ -6,3 +6,7 @@ on:
     pull_request:
       branches: [ master,develop ]
 jobs:
+  BuildWorkflow:
+    uses: ./.github/workflows/Library/Build.yml
+  TestWorkflow:
+    uses: ./.github/workflows/Library/Test.yml
