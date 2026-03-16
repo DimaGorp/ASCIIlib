@@ -1,4 +1,4 @@
-name: ASKIIlib CI
+name: Build.yml
 
 on:
   workflow_dispatch:
