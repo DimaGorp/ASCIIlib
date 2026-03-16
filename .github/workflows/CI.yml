@@ -7,6 +7,6 @@ on:
       branches: [ master,develop ]
 jobs:
   BuildWorkflow:
-    uses: ./.github/workflows/Library/Build.yml
+    uses: ./.github/actions/Library/build/Build.yml
   TestWorkflow:
-    uses: ./.github/workflows/Library/Test.yml
+    uses: ./.github/actions/Library/test/Test.yml
