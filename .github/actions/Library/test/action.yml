@@ -1,15 +1,20 @@
-﻿name: Test
-on:
-  workflow_call:
+﻿name: 'Test'
+description: 'Run tests'
 
-jobs:
-  test:
-    strategy:
-      matrix:
-        os: [ubuntu-latest,windows-latest,macos-latest]
-    runs-on: ${{ matrix.os }}
-    steps:
-      - uses: actions/checkout@v4
+inputs:
+  build_type:
+    description: 'Build type'
+    required: true
 
-      - name: Run tests
-        run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }}
+runs:
+  using: 'composite'
+  steps:
+    - name: Set reusable strings
+      id: strings
+      shell: bash
+      run: |
+        echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
+
+    - name: Run tests
+      shell: bash
+      run: ctest --build-dir ${{ steps.strings.outputs.build-output-dir }} --config ${{ inputs.build_type }}
