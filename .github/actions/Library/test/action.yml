@@ -17,4 +17,5 @@ runs:
 
     - name: Run tests
       shell: bash
-      run: ctest --build-dir ${{ steps.strings.outputs.build-output-dir }} --config ${{ inputs.build_type }}
+      working-directory: "${{ steps.strings.outputs.build-output-dir }}"
+      run: ctest --build-config "${{ inputs.build_type }}" --output-on-failure
