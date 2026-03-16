@@ -1,0 +1,20 @@
+﻿name: 'Test'
+description: 'Run tests'
+
+inputs:
+  build_type:
+    description: 'Build type'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Set reusable strings
+      id: strings
+      shell: bash
+      run: |
+        echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
+
+    - name: Run tests
+      shell: bash
+      run: ctest --build-dir ${{ steps.strings.outputs.build-output-dir }} --config ${{ inputs.build_type }}
