@@ -1,0 +1,19 @@
+﻿name: Test.yml
+on:
+  workflow_dispatch:
+  push:
+    branches: [master,develop]
+  pull_request:
+    branches: [master,develop]
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest,windows-latest,macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run tests
+        run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }}
