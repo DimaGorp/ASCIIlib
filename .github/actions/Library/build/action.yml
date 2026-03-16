@@ -1,0 +1,35 @@
+name: 'Build'
+description: 'Build the project'
+
+inputs:
+  build_type:
+    description: 'Build type'
+    required: true
+  c_compiler:
+    description: 'C compiler'
+    required: true
+  cpp_compiler:
+    description: 'C++ compiler'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Set reusable strings
+      id: strings
+      shell: bash
+      run: |
+        echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
+
+    - name: Configure CMake
+      shell: bash
+      run: >
+        cmake -B ${{ steps.strings.outputs.build-output-dir }}
+        -DCMAKE_CXX_COMPILER=${{ inputs.cpp_compiler }}
+        -DCMAKE_C_COMPILER=${{ inputs.c_compiler }}
+        -DCMAKE_BUILD_TYPE=${{ inputs.build_type }}
+        -S ${{ github.workspace }}
+
+    - name: Build
+      shell: bash
+      run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ inputs.build_type }}
