@@ -1,0 +1,2 @@
+﻿#cmakedefine RESOURCES_DIR "@RESOURCES_DIR@"
+#cmakedefine SFML_FOUND @SFML_FOUND@

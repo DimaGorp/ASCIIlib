@@ -1,18 +1,12 @@
-//
-//  ASKII.cpp
-//  ASKII_SFML
-//
-//  Created by Dell on 20.01.2023.
-//
 
 #include "ASKII.hpp"
 #include <math.h>
-#include "DIRS.h"
+//#include "DIRS.h"
 
 namespace askii {
 
 
-
+/*
 ASKII_ALGORITHM::ASKII_ALGORITHM(std::string path,double factor)
 {
     if(cur_image.loadFromFile(path)){
@@ -32,11 +26,11 @@ void ASKII_ALGORITHM::convert_to_gray(){
     int ser;
     for (int y = 0; y<size.y;y++) {
         for (int x =0 ; x<size.x; x++) {
-            ser = int(cur_image.getPixel(x,y).r * 0.299 +cur_image.getPixel(x,y).g * 0.587 +cur_image.getPixel(x,y).b * 0.114);
-            cur_image.setPixel(x,y, sf::Color(ser,ser,ser));
+            //ser = int(cur_image.getPixel(x,y).r * 0.299 +cur_image.getPixel(x,y).g * 0.587 +cur_image.getPixel(x,y).b * 0.114);
+            //cur_image.setPixel(x,y, sf::Color(ser,ser,ser));
         }
     }
-    cur_image.saveToFile("../result/result.png");
+    //cur_image.saveToFile("../result/result.png");
 }
 
 void ASKII_ALGORITHM::convert_to_aski() {
@@ -67,7 +61,7 @@ void ASKII_ALGORITHM::contrast(){
         }
     }
     
-    cur_image.saveToFile("../result/result.png");
+    //cur_image.saveToFile("../result/result.png");
     
 }
 
@@ -75,7 +69,7 @@ int ASKII_ALGORITHM::find_max_intensity(char chanel) {
     int result =0;
     switch (chanel) {
         case 'r':{
-            result = cur_image.getPixel(0, 0).r;
+            result = 0;//cur_image.getPixel(0, 0).r;
             for (int y = 0; y<size.y;y++) {
                 for (int x =0 ; x<size.x; x++) {
                     if(cur_image.getPixel(x, y).r > result){
@@ -87,7 +81,7 @@ int ASKII_ALGORITHM::find_max_intensity(char chanel) {
             break;
         }
         case 'g':{
-            result = cur_image.getPixel(0, 0).g;
+            result = 0;//cur_image.getPixel(0, 0).g;
             for (int y = 0; y<size.y;y++) {
                 for (int x =0 ; x<size.x; x++) {
                     if(cur_image.getPixel(x, y).g > result){
@@ -97,7 +91,7 @@ int ASKII_ALGORITHM::find_max_intensity(char chanel) {
             }
             break;
         }case 'b':{
-            result = cur_image.getPixel(0, 0).b;
+            result = 0;//cur_image.getPixel(0, 0).b;
             for (int y = 0; y<size.y;y++) {
                 for (int x =0 ; x<size.x; x++) {
                     if(cur_image.getPixel(x, y).b > result){
@@ -118,7 +112,7 @@ int ASKII_ALGORITHM::find_min_intensity(char chanel) {
     int result =0;
     switch (chanel) {
         case 'r':{
-            result = cur_image.getPixel(0, 0).r;
+            result = 0;//cur_image.getPixel(0, 0).r;
             for (int y = 0; y<size.y;y++) {
                 for (int x =0 ; x<size.x; x++) {
                     if(cur_image.getPixel(x, y).r < result){
@@ -244,5 +238,5 @@ void ASKII_ALGORITHM::scale(float faсtor) {
 
 
 
-
+*/
 }
