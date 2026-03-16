@@ -20,7 +20,15 @@ runs:
       shell: bash
       run: |
         sudo apt-get update
-        sudo apt-get install -y libsfml-dev
+        sudo apt-get install -y \
+          libx11-dev \
+          libxrandr-dev \
+          libxcursor-dev \
+          libxi-dev \
+          libgl1-mesa-dev \
+          libglu1-mesa-dev \
+          libudev-dev \
+          xorg-dev
     - name: Set reusable strings
       id: strings
       shell: bash
