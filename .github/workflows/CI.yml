@@ -2,12 +2,12 @@
 on:
   workflow_dispatch:
   push:
-    branches: [ master, develop ]
+    branches:  
+      - develop 
   pull_request:
-    branches: [ master, develop ]
-env:
-  BUILD_TYPE: "Debug;Release"
-  OS: "ubuntu-latest;windows-latest;macos-latest"
+    branches: 
+      - develop
+
 jobs:
   Preparing:
     runs-on: ${{OS.split[';']}}
