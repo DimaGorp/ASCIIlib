@@ -7,7 +7,13 @@ on:
     branches: [ master, develop ]
 
 jobs:
+  Preparing:
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/Library/preparing
   Build:
+    needs: Preparing
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
