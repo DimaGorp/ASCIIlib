@@ -5,16 +5,18 @@ on:
     branches: [ master, develop ]
   pull_request:
     branches: [ master, develop ]
-
+env:
+  BUILD_TYPE: "Debug;Release"
+  OS: "ubuntu-latest;windows-latest;macos-latest"
 jobs:
   Preparing:
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{OS.split[';']}}
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/Library/preparing
   Build:
     needs: Preparing
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{OS.split[';']}}
     strategy:
       fail-fast: false
       matrix:
