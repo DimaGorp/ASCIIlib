@@ -18,11 +18,11 @@ runs:
     - name: Configure CMake
       shell: bash
       run: >
-        cmake -B "$GITHUB_OUTPUT"
+        cmake -B "${{GITHUB_OUTPUT}}"
         -DCMAKE_CXX_COMPILER="${{ inputs.cpp_compiler }}"
         -DCMAKE_C_COMPILER="${{ inputs.c_compiler }}"
         -DCMAKE_BUILD_TYPE="${{ inputs.build_type }}"
 
     - name: Build
       shell: bash
-      run: cmake --build "$GITHUB_OUTPUT" --config "${{ inputs.build_type }}"
+      run: cmake --build "${{GITHUB_OUTPUT}}" --config "${{ inputs.build_type }}"
