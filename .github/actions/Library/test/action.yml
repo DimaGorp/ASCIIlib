@@ -9,12 +9,6 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - name: Set reusable strings
-      id: strings
-      shell: bash
-      run: |
-        echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
-
     - name: Run tests
       shell: bash
       working-directory: "${{ steps.strings.outputs.build-output-dir }}"
