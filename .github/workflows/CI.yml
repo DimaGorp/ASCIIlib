@@ -4,19 +4,30 @@ on:
   push:
     branches:  
       - develop 
+      - feature/**
   pull_request:
     branches: 
       - develop
+defaults:
+  run:
+    shell: bash
+    working-directory: ${{ github.workspace }}
+    
 
 jobs:
   Preparing:
-    runs-on: ${{OS.split[';']}}
+    name: Preparing dependencies
+    strategy: 
+      matrix:
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+    runs-on: ${{matrix.os}}
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/Library/preparing
   Build:
+    name: Build Library
     needs: Preparing
-    runs-on: ${{OS.split[';']}}
+    
     strategy:
       fail-fast: false
       matrix:
@@ -33,7 +44,9 @@ jobs:
             build_type: Release
             c_compiler: cl
             cpp_compiler: cl
-
+          - os: macos-latest
+    
+    runs-on: ${{matrix.os}}
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/Library/build
@@ -43,12 +56,15 @@ jobs:
           cpp_compiler: ${{ matrix.cpp_compiler }}
   
   Test:
-    needs: Build
-    runs-on: ${{ matrix.os }}
+    name: Test Library
+    needs: [Preparing,Build]
     strategy:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest, windows-latest, macos-latest ]
+        
+    
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/Library/test
