@@ -24,9 +24,10 @@ jobs:
       build-output-dir: ${{ steps.prepare.outputs.build-output-dir }}
     steps:
       - uses: actions/checkout@v4
-      - uses: ./.github/actions/Library/preparing
-        id: prepare
-          
+      - id: prepare
+        uses: ./.github/actions/Library/preparing
+      - run: echo "${{ steps.prepare.outputs.build-output-dir }}"
+        shell: bash
   Build:
     name: Build Library
     needs: Preparing
