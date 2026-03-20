@@ -20,6 +20,8 @@ jobs:
       matrix:
         os: [ ubuntu-latest, windows-latest, macos-latest ]
     runs-on: ${{matrix.os}}
+    outputs:
+      build-output-dir: ${{ steps.prepare.outputs.build-output-dir }}
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/Library/preparing

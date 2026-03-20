@@ -3,7 +3,6 @@ description: preparing for building
 outputs:
   build-output-dir:
     description: Build output directory
-    value: ${{ steps.strings.outputs.build-output-dir }}
 runs:
   using: 'composite'
   steps:
