@@ -1,8 +1,5 @@
 ﻿name: preparing
 description: preparing for building
-outputs:
-  build-output-dir:
-    description: Build output directory
 runs:
   using: 'composite'
   steps:
