@@ -22,8 +22,10 @@ jobs:
     runs-on: ${{matrix.os}}
     steps:
       - uses: actions/checkout@v4
-        id: prepare
       - uses: ./.github/actions/Library/preparing
+        id: prepare
+      - run: echo "${{ steps.prepare.outputs.build-output-dir }}"
+          
   Build:
     name: Build Library
     needs: Preparing
