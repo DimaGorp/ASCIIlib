@@ -47,11 +47,19 @@ jobs:
             c_compiler: cl
             cpp_compiler: cl
           - os: macos-latest
+            build_type: Release
+            c_compiler: clang
+            cpp_compiler: clang++
     
     runs-on: ${{matrix.os}}
     steps:
       - uses: actions/checkout@v4
-        
+      - name: Debug prepare output
+        run: |
+          echo "Full needs object: ${{ toJson(needs) }}"
+          echo "Preparing outputs: ${{ toJson(needs.Preparing.outputs) }}"
+          echo "build-output-dir: ${{ needs.Preparing.outputs.build-output-dir }}"
+        shell: bash
       - uses: ./.github/actions/Library/build
         with:
           build_type: ${{ matrix.build_type }}
