@@ -14,5 +14,6 @@ runs:
   steps:
     - name: Run tests
       shell: bash
-      working-directory: "${{ inputs.build_output_dir }}"
-      run: ctest --build-config "${{ inputs.build_type }}" --output-on-failure
+      run: |
+        cd "${{ inputs.build_output_dir }}"
+        ctest --build-config "${{ inputs.build_type }}" --output-on-failure
