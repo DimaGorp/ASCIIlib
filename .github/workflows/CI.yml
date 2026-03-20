@@ -25,18 +25,22 @@ jobs:
             build_type: Release
             c_compiler: gcc
             cpp_compiler: g++
+            job_id: ubuntu-gcc
           - os: ubuntu-latest
             build_type: Release
             c_compiler: clang
             cpp_compiler: clang++
+            job_id: ubuntu-clang
           - os: windows-latest
             build_type: Release
             c_compiler: cl
             cpp_compiler: cl
+            job_id: windows-cl
           - os: macos-latest
             build_type: Release
             c_compiler: clang
             cpp_compiler: clang++
+            job_id: macos-clang
     
     runs-on: ${{matrix.os}}
     outputs:
@@ -60,13 +64,20 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ ubuntu-latest, windows-latest, macos-latest ]
+        include:
+          - os: ubuntu-latest
+            job_id: ubuntu-gcc
+          - os: ubuntu-latest
+            job_id: ubuntu-clang
+          - os: windows-latest
+            job_id: windows-cl
+          - os: macos-latest
     
     
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/Library/test
-        with:
-          build_type: Release
-          build_output_dir: ${{needs.Build.outputs.build-output-dir }}
+    - uses: actions/checkout@v4
+    - uses: ./.github/actions/Library/test
+      with:
+        build_type: Release
+        build_output_dir: ${{ needs.Build.outputs.build-output-dir }}
