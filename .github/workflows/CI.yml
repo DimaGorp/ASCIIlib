@@ -77,6 +77,7 @@ jobs:
           - os: windows-latest
             job_id: windows-cl
           - os: macos-latest
+            job_id: macos-clang
     
     
     runs-on: ${{ matrix.os }}
