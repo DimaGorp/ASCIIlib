@@ -14,24 +14,9 @@ defaults:
     
 
 jobs:
-  Preparing:
-    name: Preparing dependencies
-    strategy: 
-      matrix:
-        os: [ ubuntu-latest, windows-latest, macos-latest ]
-    runs-on: ${{matrix.os}}
-    outputs:
-      build-output-dir: ${{ steps.prepare.outputs.build-output-dir }}
-    steps:
-      - uses: actions/checkout@v4
-      - id: prepare
-        uses: ./.github/actions/Library/preparing
-      - run: echo "${{ steps.prepare.outputs.build-output-dir }}"
-        shell: bash
+  
   Build:
     name: Build Library
-    needs: Preparing
-    
     strategy:
       fail-fast: false
       matrix:
@@ -54,29 +39,29 @@ jobs:
             cpp_compiler: clang++
     
     runs-on: ${{matrix.os}}
+    outputs:
+      build-output-dir: ${{ steps.prepare.outputs.build-output-dir }}
     steps:
       - uses: actions/checkout@v4
-      - name: Debug prepare output
-        run: |
-          echo "Full needs object: ${{ toJson(needs) }}"
-          echo "Preparing outputs: ${{ toJson(needs.Preparing.outputs) }}"
-          echo "build-output-dir: ${{ needs.Preparing.outputs.build-output-dir }}"
+      - id: prepare
+        uses: ./.github/actions/Library/preparing
+      - run: echo "${{ steps.prepare.outputs.build-output-dir }}"
         shell: bash
       - uses: ./.github/actions/Library/build
         with:
           build_type: ${{ matrix.build_type }}
           c_compiler: ${{ matrix.c_compiler }}
           cpp_compiler: ${{ matrix.cpp_compiler }}
-          build_output_dir: ${{ needs.Preparing.outputs.build-output-dir }}
+          build_output_dir: ${{ steps.prepare.outputs.build-output-dir }}
   
   Test:
     name: Test Library
-    needs: [Preparing,Build]
+    needs: [ Build ]
     strategy:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest, windows-latest, macos-latest ]
-        
+    
     
     runs-on: ${{ matrix.os }}
     steps:
@@ -84,4 +69,4 @@ jobs:
       - uses: ./.github/actions/Library/test
         with:
           build_type: Release
-          build_output_dir: ${{needs.Preparing.outputs.build-output-dir }}
+          build_output_dir: ${{needs.Build.outputs.build-output-dir }}
