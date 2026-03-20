@@ -11,6 +11,9 @@ inputs:
   cpp_compiler:
     description: 'C++ compiler'
     required: true
+  build_output_dir: 
+    description: 'Build output directory'
+    required: true
 
 runs:
   using: 'composite'
@@ -18,11 +21,11 @@ runs:
     - name: Configure CMake
       shell: bash
       run: >
-        cmake -B "${{steps.strings.outputs.build-output-dir}}"
+        cmake -B "${{inputs.build_output_dir}}"
         -DCMAKE_CXX_COMPILER="${{ inputs.cpp_compiler }}"
         -DCMAKE_C_COMPILER="${{ inputs.c_compiler }}"
         -DCMAKE_BUILD_TYPE="${{ inputs.build_type }}"
 
     - name: Build
       shell: bash
-      run: cmake --build "${{steps.strings.outputs.build-output-dir}}" --config "${{ inputs.build_type }}"
+      run: cmake --build "${{inputs.build_output_dir}}" --config "${{ inputs.build_type }}"
