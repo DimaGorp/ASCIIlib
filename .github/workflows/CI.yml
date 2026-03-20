@@ -55,10 +55,10 @@ jobs:
           build_type: ${{ matrix.build_type }}
           c_compiler: ${{ matrix.c_compiler }}
           cpp_compiler: ${{ matrix.cpp_compiler }}
-          build_output_dir: ${{ steps.prepare.outputs.build-output-dir }}
+          build_output_dir: build
       - uses: actions/cache/save@v4
         with:
-          path: ${{ steps.prepare.outputs.build-output-dir }}
+          path: build
           key: build-${{ matrix.job_id }}-${{ github.sha }}
   
   Test:
@@ -83,9 +83,9 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/cache@v4
         with:
-          path: ${{ needs.Build.outputs.build-dir }}
+          path: build
           key: build-${{ matrix.job_id }}-${{ github.sha }}
       - uses: ./.github/actions/Library/test
         with:
           build_type: Release
-          build_output_dir: ${{ needs.Build.outputs.build-dir }}
+          build_output_dir: build
