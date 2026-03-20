@@ -57,7 +57,7 @@ jobs:
           build_type: ${{ matrix.build_type }}
           c_compiler: ${{ matrix.c_compiler }}
           cpp_compiler: ${{ matrix.cpp_compiler }}
-          build_output_dir: ${{ needs.Preparing.prepare.outputs.build-output-dir }}
+          build_output_dir: ${{ needs.Preparing.outputs.build-output-dir }}
   
   Test:
     name: Test Library
@@ -74,4 +74,4 @@ jobs:
       - uses: ./.github/actions/Library/test
         with:
           build_type: Release
-          build_output_dir: ${{needs.Preparing.prepare.outputs.build-output-dir}}
+          build_output_dir: ${{needs.Preparing.outputs.build-output-dir }}
