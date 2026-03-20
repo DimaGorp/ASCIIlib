@@ -49,19 +49,17 @@ jobs:
       - uses: actions/checkout@v4
       - id: prepare
         uses: ./.github/actions/Library/preparing
-      - run: echo "${{ steps.prepare.outputs.build-output-dir }}"
-        shell: bash
+      
       - uses: ./.github/actions/Library/build
         with:
           build_type: ${{ matrix.build_type }}
           c_compiler: ${{ matrix.c_compiler }}
           cpp_compiler: ${{ matrix.cpp_compiler }}
           build_output_dir: ${{ steps.prepare.outputs.build-output-dir }}
-      - uses: actions/upload-artifact@v4
+      - uses: actions/cache/save@v4
         with:
-          name: build-${{ matrix.job_id }}
           path: ${{ steps.prepare.outputs.build-output-dir }}
-          retention-days: 1
+          key: build-${{ matrix.job_id }}-${{ github.sha }}
   
   Test:
     name: Test Library
@@ -83,11 +81,11 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/download-artifact@v4
+      - uses: actions/cache@v4
         with:
-          name: build-${{ matrix.job_id }}
-          path: ./build
+          path: ${{ steps.prepare.outputs.build-output-dir }}
+          key: build-${{ matrix.job_id }}-${{ github.sha }}
       - uses: ./.github/actions/Library/test
         with:
           build_type: Release
-          build_output_dir: ./build
+          build_output_dir: ${{ steps.prepare.outputs.build-output-dir }}
