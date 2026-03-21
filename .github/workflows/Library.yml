@@ -1,0 +1,78 @@
+﻿name: Library.yml
+on:
+  workflow_call: 
+jobs:
+  Build:
+    name: Build Library
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            build_type: Release
+            c_compiler: gcc
+            cpp_compiler: g++
+            job_id: ubuntu-gcc
+          - os: ubuntu-latest
+            build_type: Release
+            c_compiler: clang
+            cpp_compiler: clang++
+            job_id: ubuntu-clang
+          - os: windows-latest
+            build_type: Release
+            c_compiler: cl
+            cpp_compiler: cl
+            job_id: windows-cl
+          - os: macos-latest
+            build_type: Release
+            c_compiler: clang
+            cpp_compiler: clang++
+            job_id: macos-clang
+
+    runs-on: ${{matrix.os}}
+    outputs:
+      build-output-dir: ${{ steps.prepare.outputs.build-output-dir }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: prepare
+        uses: ./.github/actions/Library/preparing
+
+      - uses: ./.github/actions/Library/build
+        with:
+          build_type: ${{ matrix.build_type }}
+          c_compiler: ${{ matrix.c_compiler }}
+          cpp_compiler: ${{ matrix.cpp_compiler }}
+          build_output_dir: build
+      - uses: actions/cache/save@v4
+        with:
+          path: build
+          key: build-${{ matrix.job_id }}-${{ github.sha }}
+
+  Test:
+    name: Test Library
+    needs: [ Build ]
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            job_id: ubuntu-gcc
+          - os: ubuntu-latest
+            job_id: ubuntu-clang
+          - os: windows-latest
+            job_id: windows-cl
+          - os: macos-latest
+            job_id: macos-clang
+
+
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
+        with:
+          path: build
+          key: build-${{ matrix.job_id }}-${{ github.sha }}
+      - uses: ./.github/actions/Library/test
+        with:
+          build_type: Release
+          build_output_dir: build
