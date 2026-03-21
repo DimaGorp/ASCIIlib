@@ -17,4 +17,5 @@ jobs:
   build-library:
     uses: ./.github/workflows/library.yml
   test-library:
+    needs: build-library
     uses: ./.github/workflows/test.yml
