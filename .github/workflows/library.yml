@@ -17,7 +17,7 @@ jobs:
       - if: runner.os == 'Linux'
         run: |
           echo "Dependencies folder:" &&
-          echo "$DEPS_FOLDER"
+          echo "${{steps.prepare.outputs.deps_folder}}"
   build:
     name: Build Library
     needs: [ preparing ]
@@ -29,7 +29,7 @@ jobs:
       - if: runner.os == 'Linux'
         run: |
           echo "Dependencies folder:" &&
-          echo "$DEPS_FOLDER"
+          echo "${{needs.preparing.outputs.deps_folder}}"
       - uses: actions/checkout@v4
       - name: Building Library
         run:
