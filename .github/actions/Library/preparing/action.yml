@@ -8,8 +8,7 @@ outputs:
 runs:
   using: 'composite'
   steps:
-    - name: Install deps
-      if: runner.os == 'Linux'
+    - name: Install dependencies
       shell: bash
       run: |
         sudo apt-get update
@@ -25,8 +24,8 @@ runs:
     - id: save_deps_folder
       shell: bash
       run: echo "deps_folder=deps" >> $GITHUB_OUTPUT
-    - name: Cache dependencies
-      uses: actions/cache@v4
-      with:
-        path: deps
-        key: ${{runner.os}}-deps
+    #- name: Cache dependencies
+    #  uses: actions/cache@v4
+    #  with:
+    #    path: deps
+    #    key: ${{runner.os}}-deps
