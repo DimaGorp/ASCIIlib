@@ -1,13 +1,15 @@
 ﻿name: CI
+run-name: Continuous Integration for Library
 on:
   workflow_dispatch:
   push:
     branches:  
-      - develop 
-      - feature/**
+      - '!develop'
+      - 'feature/**'
   pull_request:
     branches: 
-      - develop
+      - 'develop'
+      - '!feature/**'
 defaults:
   run:
     shell: bash
