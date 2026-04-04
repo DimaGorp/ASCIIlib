@@ -8,6 +8,8 @@ jobs:
       matrix:
         os: [ ubuntu-latest, windows-latest, macos-latest ]
     runs-on: ${{ matrix.os }}
+    outputs:
+      deps_folder: ${{ steps.prepare.outputs.deps_folder }}
     steps:
       - uses: actions/checkout@v4
       - id: prepare
@@ -20,7 +22,11 @@ jobs:
         os: [ ubuntu-latest, windows-latest, macos-latest ]
     runs-on: ${{matrix.os}}
     steps:
+      - if: runner.os == 'Linux'
+        run: |
+          echo "Dependencies folder:" &&
+          echo "$DEPS_FOLDER"
       - uses: actions/checkout@v4
-      - name : Building Library
+      - name: Building Library
         run:
           echo "Building Library"

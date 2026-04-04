@@ -1,6 +1,10 @@
 ﻿name: preparing
 description: preparing for building
 
+outputs: 
+  deps_folder:
+    description: 'Dependencies folder'
+    value: ${{ steps.save_deps_folder.outputs.deps_folder }}
 runs:
   using: 'composite'
   steps:
@@ -18,3 +22,11 @@ runs:
         libglu1-mesa-dev \
         libudev-dev \
         xorg-dev
+    - id: save_deps_folder
+      shell: bash
+      run: echo "deps_folder=deps" >> $GITHUB_OUTPUT
+    - name: Cache dependencies
+      uses: actions/cache@v4
+      with:
+        path: deps
+        key: ${{runner.os}}-deps
