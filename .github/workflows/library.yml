@@ -13,6 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - id: prepare
+        if: runner.os == 'Linux'
         uses: ./.github/actions/Library/preparing
   
   build:
