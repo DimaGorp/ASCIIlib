@@ -8,14 +8,28 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - name: Get Cached Linux dependencies
+    - name: Cache Linux dependencies
       if: runner.os == 'Linux'
       uses: actions/cache@v4
       with:
         path: /var/cache/apt/archives
         key: ${{ runner.os }}-apt-${{ hashFiles('.github/workflows/*.yml') }}
         restore-keys: |
-          ${{ runner.os }}-apt-  
+          ${{ runner.os }}-apt-
+    - name: Install dependencies
+      if: runner.os == 'Linux'
+      shell: bash
+      run: |
+        echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' | sudo tee /etc/apt/apt.conf.d/01keep-debs
+        sudo apt-get update -o Dir::Etc::sourcelist="sources.list" -o Dir::Etc::sourceparts="-" -o APT::Get::List-Cleanup="0"
+        sudo apt-get install -y --no-install-recommends \
+          libx11-dev \
+          libxrandr-dev \
+          libxcursor-dev \
+          libxi-dev \
+          libgl1-mesa-dev \
+          libglu1-mesa-dev \
+          libudev-dev 
     - name: Configure CMake
       shell: bash
       run: |
