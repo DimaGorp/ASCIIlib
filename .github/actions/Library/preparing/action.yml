@@ -8,6 +8,7 @@ outputs:
   build_dir:
     description: 'Build Folder'
     value: ${{steps.strings.outputs.build_dir}}
+
 runs:
   using: 'composite'
   steps:

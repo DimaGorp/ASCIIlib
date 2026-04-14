@@ -8,10 +8,13 @@ inputs:
   build_output_dir: 
     description: 'Build output directory'
     required: true
-
 runs:
   using: 'composite'
-  steps:      
+  steps:  
+    - name: Clean Cache
+      shell: bash
+      run: |
+        rm -rf ${{inputs.build_output_dir}}  
     - name: Configure CMake
       shell: bash
       run: >
