@@ -5,9 +5,17 @@ outputs:
   deps_folder:
     description: 'Dependencies folder'
     value: ${{ steps.save_deps_folder.outputs.deps_folder }}
+  build_dir:
+    description: 'Build Folder'
+    value: ${{steps.strings.outputs.build_dir}}
 runs:
   using: 'composite'
   steps:
+    - name: Set reusable strings
+      id: strings
+      shell: bash
+      run: |
+        echo "::set-output name=build_dir::$GITHUB_WORKSPACE/build" 
     - name: Install dependencies
       shell: bash
       run: |

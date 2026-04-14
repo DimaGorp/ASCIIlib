@@ -10,6 +10,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     outputs:
       deps_folder: ${{ steps.prepare.outputs.deps_folder }}
+      build_dir: ${{steps.prepare.outputs.build_dir}}
     steps:
       - uses: actions/checkout@v4
       - id: prepare
@@ -29,5 +30,7 @@ jobs:
           echo "${{needs.preparing.outputs.deps_folder}}"
       - uses: actions/checkout@v4
       - name: Building Library
-        run:
-          echo "Building Library"
+        uses: ./.github/actions/Library/build
+        with:
+          build_output_dir: ${{needs.preparing.outputs.build_dir}}
+          build_type: Debug
