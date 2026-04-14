@@ -5,12 +5,12 @@ jobs:
   preparing:
     name: preparing
     strategy:
+      fail-fast: false
       matrix:
         os: [ ubuntu-latest, windows-latest, macos-latest ]
     runs-on: ${{ matrix.os }}
     outputs:
       deps_folder: ${{ steps.prepare.outputs.deps_folder }}
-      build_dir: ${{steps.prepare.outputs.build_dir}}
     steps:
       - uses: actions/checkout@v4
       - id: prepare
@@ -20,6 +20,7 @@ jobs:
     name: Build Library
     needs: [ preparing ]
     strategy:
+      fail-fast: false
       matrix:
         os: [ ubuntu-latest, windows-latest, macos-latest ]
     runs-on: ${{matrix.os}}
@@ -32,5 +33,4 @@ jobs:
       - name: Building Library
         uses: ./.github/actions/Library/build
         with:
-          build_output_dir: ${{needs.preparing.outputs.build_dir}}
           build_type: Debug

@@ -5,20 +5,17 @@ inputs:
   build_type:
     description: 'Build type'
     required: true
-  build_output_dir: 
-    description: 'Build output directory'
-    required: true
 runs:
   using: 'composite'
   steps:   
     - name: Configure CMake
       shell: bash
       run: |
-        sudo chown -R $USER ${{github.workspace}}
-        rm -rf ${{inputs.build_output_dir}}
-        cmake -B '${{inputs.build_output_dir}}'
+        cd "${{ github.workspace }}"
+        sudo rm -rf build
+        cmake -B build
         -DCMAKE_BUILD_TYPE=${{inputs.build_type}}
 
     - name: Build
       shell: bash
-      run: cmake --build "${{inputs.build_output_dir}}" --config "${{ inputs.build_type }}"
+      run: cmake --build build --config "${{ inputs.build_type }}"
