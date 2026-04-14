@@ -29,7 +29,8 @@ runs:
           libxi-dev \
           libgl1-mesa-dev \
           libglu1-mesa-dev \
-          libudev-dev 
+          libudev-dev  \
+          libfreetype6-dev
     - name: Configure CMake
       shell: bash
       run: |
