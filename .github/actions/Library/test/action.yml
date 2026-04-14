@@ -5,17 +5,15 @@ inputs:
   build_type:
     description: 'Build type'
     required: true
+  build_output_dir:
+    description: 'Build output directory'
+    required: true
 
 runs:
   using: 'composite'
   steps:
-    - name: Set reusable strings
-      id: strings
-      shell: bash
-      run: |
-        echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
-
     - name: Run tests
       shell: bash
-      working-directory: "${{ steps.strings.outputs.build-output-dir }}"
-      run: ctest --build-config "${{ inputs.build_type }}" --output-on-failure
+      run: |
+        cd "${{ inputs.build_output_dir }}"
+        ctest --build-config "${{ inputs.build_type }}" --output-on-failure
