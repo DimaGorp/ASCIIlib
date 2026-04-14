@@ -10,18 +10,18 @@ runs:
   using: 'composite'
   steps:
     - name: Cache Linux dependencies
-      id: cache
+      if: runner.os == 'Linux'
       uses: actions/cache@v4
       with:
-        path: deps
-        key: ${{runner.os}}-deps
+        path: /var/cache/apt/archives
+        key: ${{ runner.os }}-apt-${{ hashFiles('.github/workflows/*.yml') }}
         restore-keys: |
-          ${{runner.os}}-deps
-      if: runner.os == 'Linux'
+          ${{ runner.os }}-apt-
     - name: Install dependencies
-      if: steps.cache.outputs.cache-hit != 'true' && runner.os == 'Linux'
+      if: runner.os == 'Linux'
       shell: bash
       run: |
+        echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' | sudo tee /etc/apt/apt.conf.d/01keep-debs
         sudo apt-get update -o Dir::Etc::sourcelist="sources.list" -o Dir::Etc::sourceparts="-" -o APT::Get::List-Cleanup="0"
         sudo apt-get install -y --no-install-recommends \
           libx11-dev \
@@ -32,6 +32,7 @@ runs:
           libglu1-mesa-dev \
           libudev-dev
     - id: save_deps_folder
+      if: runner.os == 'Linux'
       shell: bash
       run: echo "deps_folder=$GITHUB_WORKSPACE/deps" >> $GITHUB_OUTPUT
-      if: runner.os == 'Linux'
+      
