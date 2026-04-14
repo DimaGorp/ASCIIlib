@@ -14,7 +14,7 @@ runs:
     - name: Configure CMake
       shell: bash
       run: |
-        sudo chown -R $USER:$USER ${{ github.workspace }}
+        sudo chown -R $USER ${{github.workspace}}
         rm -rf ${{inputs.build_output_dir}}
         cmake -B '${{inputs.build_output_dir}}'
         -DCMAKE_BUILD_TYPE=${{inputs.build_type}}
