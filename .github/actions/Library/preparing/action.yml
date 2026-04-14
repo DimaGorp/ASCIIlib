@@ -21,9 +21,11 @@ runs:
         libglu1-mesa-dev \
         libudev-dev \
         xorg-dev
+      if: runner.os == 'Linux'
     - id: save_deps_folder
       shell: bash
       run: echo "::set-output name=deps_folder::$GITHUB_WORKSPACE/deps"
+      if: runner.os == 'Linux'
     #- name: Cache dependencies
     #  uses: actions/cache@v4
     #  with:
