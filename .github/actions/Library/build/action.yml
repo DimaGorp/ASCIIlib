@@ -11,10 +11,8 @@ runs:
     - name: Configure CMake
       shell: bash
       run: |
-        cd "${{ github.workspace }}"
-        sudo rm -rf build
-        cmake -B build
-        -DCMAKE_BUILD_TYPE=${{inputs.build_type}}
+        rm -rf "${{ github.workspace }}/build"
+        cmake -B build -DCMAKE_BUILD_TYPE="${{inputs.build_type}}"
 
     - name: Build
       shell: bash
