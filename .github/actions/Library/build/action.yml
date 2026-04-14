@@ -12,7 +12,7 @@ runs:
       if: runner.os == 'Linux'
       uses: actions/cache@v4
       with:
-        path: /var/cache/apt/archives
+        path: deps
         key: ${{ runner.os }}-apt-${{ hashFiles('.github/workflows/*.yml') }}
         restore-keys: |
           ${{ runner.os }}-apt-
@@ -20,17 +20,15 @@ runs:
       if: runner.os == 'Linux'
       shell: bash
       run: |
-        echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' | sudo tee /etc/apt/apt.conf.d/01keep-debs
-        sudo apt-get update -o Dir::Etc::sourcelist="sources.list" -o Dir::Etc::sourceparts="-" -o APT::Get::List-Cleanup="0"
+        if [ -d "deps" ] && [ "$(ls -A deps)" ]; then
+          sudo cp deps/*.deb /var/cache/apt/archives/
+        fi
+        sudo apt-get update
         sudo apt-get install -y --no-install-recommends \
-          libx11-dev \
-          libxrandr-dev \
-          libxcursor-dev \
-          libxi-dev \
-          libgl1-mesa-dev \
-          libglu1-mesa-dev \
-          libudev-dev  \
-          libfreetype6-dev
+          libx11-dev libxrandr-dev libxcursor-dev libxi-dev \
+          libgl1-mesa-dev libglu1-mesa-dev libudev-dev libfreetype6-dev
+        mkdir -p deps
+        cp /var/cache/apt/archives/*.deb deps/
     - name: Configure CMake
       shell: bash
       run: |
