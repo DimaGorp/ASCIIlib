@@ -7,7 +7,15 @@ inputs:
     required: true
 runs:
   using: 'composite'
-  steps:   
+  steps:
+    - name: Get Cached Linux dependencies
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/deps
+        key: ${{runner.os}}-deps
+        restore-keys: |
+          ${{runner.os}}-deps
+      if: runner.os == 'Linux'   
     - name: Configure CMake
       shell: bash
       run: |
