@@ -12,8 +12,8 @@ set(TESTS_DIR "${CMAKE_SOURCE_DIR}/test")
 set(CMAKE_DISABLE_SOURCE_CHANGES ON)
 set(CMAKE_DISABLE_IN_SOURCE_BUILD ON)
 #options for Building externals 
-option(BUILD_EXAMPLES "Build Examples" ON)
-option(BUILD_TESTS "Build Tests" ON)
+option(BUILD_EXAMPLES "Build Examples" OFF)
+option(BUILD_TESTS "Build Tests" OFF)
 
 message(STATUS "Building shared lib: ${BUILD_SHARED_LIBS}")
 message(STATUS "Building examples: ${BUILD_EXAMPLES}")
@@ -47,10 +47,11 @@ elseif(${BUILD_TESTS})
 endif()
 
 #Collect Sources and make a library and its components
+add_subdirectory(${INCLUDE_DIR})
 add_subdirectory(${SOURCE_DIR})
-#Create an alias for the library
-add_library(ASCII::ASCIIlib ALIAS ${PROJECT_NAME})
 
+add_library(${PROJECT_NAME} INTERFACE)
+target_link_libraries(${PROJECT_NAME} INTERFACE Core)
 #Set properties for Target
 set_target_properties(${PROJECT_NAME}
                         PROPERTIES
@@ -58,6 +59,25 @@ set_target_properties(${PROJECT_NAME}
                         CMAKE_CXX_STANDARD_REQUIRED ON
                         CMAKE_CXX_EXTENSIONS OFF
 )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#[===[
 include(GNUInstallDirs)
 #include directories for the library
 target_include_directories(${PROJECT_NAME} 
@@ -91,31 +111,4 @@ install(EXPORT ASCII
 
 
 
-
-
-
-
-
-
-
-
-
-#[[
-
-#Packaging
-include(InstallRequiredSystemLibraries)
-set(CPACK_PACKAGE_NAME "ASCIIlib")
-set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/LICENSE")
-set(CPACK_PACKAGE_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")
-set(CPACK_PACKAGE_VERSION_MINOR "${PROJECT_VERSION_MINOR}")
-set(CPACK_PACKAGE_VERSION_PATCH "${PROJECT_VERSION_PATCH}")
-set(CPACK_PACKAGE_CONTACT "dgorpinuk50@gmail.com")
-if(APPLE)
-    set(CPACK_GENERATOR "DragNDrop;TGZ")
-elseif(WIN32)
-    set(CPACK_GENERATOR "ZIP;NSIS")
-else()
-    set(CPACK_GENERATOR "TGZ;DEB")
-endif()
-include(CPack)
-]]
+]===]

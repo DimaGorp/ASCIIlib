@@ -1,5 +1,10 @@
-﻿set(ASCII_SOURCES
-     "${SOURCE_DIR}/ASKII.cpp"
-)
-
-add_library(${PROJECT_NAME} ${ASCII_SOURCES})
+﻿target_sources(
+          Core
+     PRIVATE
+          ${SOURCE_DIR}/ASKII.cpp
+     )
+target_compile_definitions(
+          Core
+     PRIVATE
+          cxx_std_20
+     )
