@@ -2,13 +2,13 @@
     "version": 4,
     "configurePresets": [
         {
-            "name": "example-preset",
+            "name": "build-examples",
             "binaryDir": "${sourceDir}/build",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE":"Release",
                 "BUILD_EXAMPLES":true,
                 "CONSOLE_APP":true,
-                "SFML_APP":false
+                "SFML_APP":true
             }
         }
     ]

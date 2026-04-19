@@ -1,6 +1,10 @@
-﻿project(SFML LANGUAGES CXX)
+﻿cmake_minimum_required(VERSION 3.28.2[...4.2.0])
+project(SFML LANGUAGES CXX)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/examples/${PROJECT_NAME})
 add_executable(${PROJECT_NAME} main.cpp)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE ASCIIlib SFML::Graphics)
 target_include_directories(${PROJECT_NAME} PUBLIC ${INCLUDE_DIR} ${CMAKE_BINARY_DIR}/examples)
+if(${SFML_FOUND})
+    target_compile_definitions(${PROJECT_NAME} PRIVATE SFML_FOUND)
+endif()

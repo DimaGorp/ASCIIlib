@@ -60,55 +60,19 @@ set_target_properties(${PROJECT_NAME}
                         CMAKE_CXX_EXTENSIONS OFF
 )
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#[===[
+# Exporting a library
 include(GNUInstallDirs)
-#include directories for the library
-target_include_directories(${PROJECT_NAME} 
-                    PUBLIC 
-                        $<BUILD_INTERFACE:${INCLUDE_DIR}>
-                        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
-                    PRIVATE
-                        ${SOURCE_DIR}
-                    )
 
-#install and export library
-
-#install the header files
-install(FILES ${INCLUDE_DIR}/ASKII.hpp
-        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}
-)
-#install the library
+# Add library for exporting
 install(TARGETS ${PROJECT_NAME}
-        EXPORT ASCII 
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-)
-
-#Export the library for use with find_package
-install(EXPORT ASCII
-        FILE ASCIIConfig.cmake
+        EXPORT ${PROJECT_NAME}
+        )
+#Export a library
+install(EXPORT ${PROJECT_NAME} 
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
         NAMESPACE ASCII::
-        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/ASCIIlib
 )
+#Export an ASCIIlibConfig.cmake file
+install(FILES ${PROJECT_SOURCE_DIR}/cmake/ASCIIlibConfig.cmake
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME})
 
-
-
-]===]

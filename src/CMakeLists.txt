@@ -3,7 +3,7 @@
      PRIVATE
           ${SOURCE_DIR}/ASKII.cpp
      )
-target_compile_definitions(
+target_compile_features(
           Core
      PRIVATE
           cxx_std_20

@@ -1,7 +1,6 @@
 ﻿set(FETCHCONTENT_BASE_DIR ${CMAKE_BINARY_DIR}/examples/deps)
 include(FetchContent)
 
-find_package(SFML 3 COMPONENTS Graphics)
 if(NOT SFML_FOUND)
     message(STATUS "SFML 3.0.2 not found - downloading dependency")
     FetchContent_Declare(
