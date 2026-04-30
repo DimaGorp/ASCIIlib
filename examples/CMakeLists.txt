@@ -1,11 +1,11 @@
 ﻿
 option(CONSOLE_APP "CLI Example" ON)
 option(SFML_APP "Compatability with SFML" ON)
-
+option(INTEGRATION_EX "Integration examples" OFF)
 if(SFML_APP)
+    #Download SFML Dependencies
     find_package(SFML 3 COMPONENTS Graphics)
-    if(NOT ${SFML_FOUND})
-        #Download SFML Dependencies
+    if(NOT SFML_FOUND)
         add_subdirectory(deps)
     endif()
     SET(RESOURCES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/deps/resources)
@@ -19,4 +19,8 @@ if(CONSOLE_APP)
 endif()
 if(SFML_APP)
     add_subdirectory("SFML")
+endif()
+
+if(INTEGRATION_EX)
+    add_subdirectory(integration)
 endif()

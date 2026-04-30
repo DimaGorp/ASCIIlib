@@ -30,7 +30,7 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 #Set the project name and languages
 project(ASCIIlib 
-            VERSION 1.0.0
+            VERSION 0.0.1
             LANGUAGES CXX
         )
 
@@ -60,19 +60,36 @@ set_target_properties(${PROJECT_NAME}
                         CMAKE_CXX_EXTENSIONS OFF
 )
 
-# Exporting a library
+
+# Add ALIASES for Components
+add_library(${PROJECT_NAME}::Core ALIAS Core)
+# Specify Install rules for Library
 include(GNUInstallDirs)
 
+#include directories for library
+target_include_directories(${PROJECT_NAME} INTERFACE
+        $<BUILD_INTERFACE:${SOURCE_DIR}>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>    
+)
+
 # Add library for exporting
-install(TARGETS ${PROJECT_NAME}
-        EXPORT ${PROJECT_NAME}
+install(TARGETS ${PROJECT_NAME} Core
+        EXPORT ${PROJECT_NAME}Targets
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        INCLUDES DESTINATION ${CMAKE_INSTALL_INLUDEDIR}
         )
-#Export a library
-install(EXPORT ${PROJECT_NAME} 
+
+# Add Header Files for Exporting
+install(DIRECTORY ${INCLUDE_DIR}/
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+        FILES_MATCHING
+        PATTERN "*.hpp"
+        )
+#Export and Config
+install(EXPORT ${PROJECT_NAME}Targets 
+        FILE ASCIIlibConfig.cmake
         DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
         NAMESPACE ASCII::
 )
-#Export an ASCIIlibConfig.cmake file
-install(FILES ${PROJECT_SOURCE_DIR}/cmake/ASCIIlibConfig.cmake
-        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME})
-
