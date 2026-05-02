@@ -1,6 +1,5 @@
-﻿#include "Config.h"
-#include <iostream>
-
+﻿#include <iostream>
+#include <Config.h>
 #ifdef SFML_FOUND
     #include <SFML/Graphics.hpp>
 #endif

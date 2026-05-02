@@ -1,19 +1,19 @@
 cmake_minimum_required(VERSION 3.28.2[...4.2.0])
 
 #Library Directories
-set(INCLUDE_DIR "${CMAKE_SOURCE_DIR}/include")
-set(SOURCE_DIR "${CMAKE_SOURCE_DIR}/src")
+set(INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include")
+set(SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src")
 #Code Examples
-set(EXAMPLES_DIR "${CMAKE_SOURCE_DIR}/examples")
+set(EXAMPLES_DIR "${CMAKE_CURRENT_SOURCE_DIR}/examples")
 #Tests Directory
-set(TESTS_DIR "${CMAKE_SOURCE_DIR}/test")
+set(TESTS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/test")
 
 #Disable in Source Build
 set(CMAKE_DISABLE_SOURCE_CHANGES ON)
 set(CMAKE_DISABLE_IN_SOURCE_BUILD ON)
 #options for Building externals 
-option(BUILD_EXAMPLES "Build Examples" ON)
-option(BUILD_TESTS "Build Tests" ON)
+option(BUILD_EXAMPLES "Build Examples" OFF)
+option(BUILD_TESTS "Build Tests" OFF)
 
 message(STATUS "Building shared lib: ${BUILD_SHARED_LIBS}")
 message(STATUS "Building examples: ${BUILD_EXAMPLES}")
@@ -30,7 +30,7 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 #Set the project name and languages
 project(ASCIIlib 
-            VERSION 1.0.0
+            VERSION 0.0.1
             LANGUAGES CXX
         )
 
@@ -47,10 +47,11 @@ elseif(${BUILD_TESTS})
 endif()
 
 #Collect Sources and make a library and its components
+add_subdirectory(${INCLUDE_DIR})
 add_subdirectory(${SOURCE_DIR})
-#Create an alias for the library
-add_library(ASCII::ASCIIlib ALIAS ${PROJECT_NAME})
 
+add_library(${PROJECT_NAME} INTERFACE)
+target_link_libraries(${PROJECT_NAME} INTERFACE Core)
 #Set properties for Target
 set_target_properties(${PROJECT_NAME}
                         PROPERTIES
@@ -58,64 +59,37 @@ set_target_properties(${PROJECT_NAME}
                         CMAKE_CXX_STANDARD_REQUIRED ON
                         CMAKE_CXX_EXTENSIONS OFF
 )
+
+
+# Add ALIASES for Components
+add_library(${PROJECT_NAME}::Core ALIAS Core)
+# Specify Install rules for Library
 include(GNUInstallDirs)
-#include directories for the library
-target_include_directories(${PROJECT_NAME} 
-                    PUBLIC 
-                        $<BUILD_INTERFACE:${INCLUDE_DIR}>
-                        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
-                    PRIVATE
-                        ${SOURCE_DIR}
-                    )
 
-#install and export library
-
-#install the header files
-install(FILES ${INCLUDE_DIR}/ASKII.hpp
-        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}
+#include directories for library
+target_include_directories(${PROJECT_NAME} INTERFACE
+        $<BUILD_INTERFACE:${SOURCE_DIR}>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>    
 )
-#install the library
-install(TARGETS ${PROJECT_NAME}
-        EXPORT ASCII 
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+
+# Add library for exporting
+install(TARGETS ${PROJECT_NAME} Core
+        EXPORT ${PROJECT_NAME}Targets
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-)
+        INCLUDES DESTINATION ${CMAKE_INSTALL_INLUDEDIR}
+        )
 
-#Export the library for use with find_package
-install(EXPORT ASCII
-        FILE ASCIIConfig.cmake
+# Add Header Files for Exporting
+install(DIRECTORY ${INCLUDE_DIR}/
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+        FILES_MATCHING
+        PATTERN "*.hpp"
+        )
+#Export and Config
+install(EXPORT ${PROJECT_NAME}Targets 
+        FILE ASCIIlibConfig.cmake
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
         NAMESPACE ASCII::
-        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/ASCIIlib
 )
-
-
-
-
-
-
-
-
-
-
-
-
-#[[
-
-#Packaging
-include(InstallRequiredSystemLibraries)
-set(CPACK_PACKAGE_NAME "ASCIIlib")
-set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/LICENSE")
-set(CPACK_PACKAGE_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")
-set(CPACK_PACKAGE_VERSION_MINOR "${PROJECT_VERSION_MINOR}")
-set(CPACK_PACKAGE_VERSION_PATCH "${PROJECT_VERSION_PATCH}")
-set(CPACK_PACKAGE_CONTACT "dgorpinuk50@gmail.com")
-if(APPLE)
-    set(CPACK_GENERATOR "DragNDrop;TGZ")
-elseif(WIN32)
-    set(CPACK_GENERATOR "ZIP;NSIS")
-else()
-    set(CPACK_GENERATOR "TGZ;DEB")
-endif()
-include(CPack)
-]]
