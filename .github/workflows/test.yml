@@ -10,15 +10,14 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Run unit tests
-      run: |
-        echo "Run unit tests"
+      uses: ./.github/actions/Library/test
   integration-tests:
     strategy:
       matrix:
         os: [ ubuntu-latest, windows-latest, macos-latest ]
     runs-on: ${{matrix.os}}
     steps:
-    - uses: actions/checkout@v4
     - name: Run integration tests
-      run: |
-        echo "Run integration tests"
+      uses: DimaGorp/ASCIIlib_Usage_Example/.github/workflows/Testing.yml@master
+      with:
+        branch_from_clone: ${{github.ref_name}}
