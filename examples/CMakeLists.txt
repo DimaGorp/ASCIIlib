@@ -1,7 +1,6 @@
 ﻿
 option(CONSOLE_APP "CLI Example" ON)
 option(SFML_APP "Compatability with SFML" ON)
-option(INTEGRATION_EX "Integration examples" OFF)
 if(SFML_APP)
     #Download SFML Dependencies
     find_package(SFML 3 COMPONENTS Graphics)
@@ -19,8 +18,4 @@ if(CONSOLE_APP)
 endif()
 if(SFML_APP)
     add_subdirectory("SFML")
-endif()
-
-if(INTEGRATION_EX)
-    add_subdirectory(integration)
 endif()
