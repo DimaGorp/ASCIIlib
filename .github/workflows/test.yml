@@ -1,23 +1,19 @@
 ﻿name: test.yml
 on:
   workflow_call:
+
 jobs:
   unit-tests:
     strategy:
       matrix:
         os: [ ubuntu-latest, windows-latest, macos-latest ]
-    runs-on: ${{matrix.os}}
+    runs-on: ${{ matrix.os }}
     steps:
-    - uses: actions/checkout@v4
-    - name: Run unit tests
-      uses: ./.github/actions/Library/test
+      - uses: actions/checkout@v4
+      - name: Run unit tests
+        uses: ./.github/actions/Library/test
+
   integration-tests:
-    strategy:
-      matrix:
-        os: [ ubuntu-latest, windows-latest, macos-latest ]
-    runs-on: ${{matrix.os}}
-    steps:
-    - name: Run integration tests
-      uses: DimaGorp/ASCIIlib_Usage_Example/.github/workflows/Testing.yml@master
-      with:
-        branch_from_clone: ${{github.ref_name}}
+    uses: DimaGorp/ASCIIlib_Usage_Example/.github/workflows/Testing.yml@master
+    with:
+      branch_from_clone: ${{ github.ref_name }}
