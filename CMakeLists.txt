@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.28.2[...4.2.0])
 
 #Library Directories
-set(INCLUDE_DIR "${CMAKE_SOURCE_DIR}/include")
-set(SOURCE_DIR "${CMAKE_SOURCE_DIR}/src")
+set(INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include")
+set(SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src")
 #Code Examples
-set(EXAMPLES_DIR "${CMAKE_SOURCE_DIR}/examples")
+set(EXAMPLES_DIR "${CMAKE_CURRENT_SOURCE_DIR}/examples")
 #Tests Directory
-set(TESTS_DIR "${CMAKE_SOURCE_DIR}/test")
+set(TESTS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/test")
 
 #Disable in Source Build
 set(CMAKE_DISABLE_SOURCE_CHANGES ON)
