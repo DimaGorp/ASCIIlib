@@ -39,16 +39,16 @@ project(ASCIIlib
 if(${BUILD_EXAMPLES})
     message(STATUS "Building examples...")
     #Examples
-    add_subdirectory(${EXAMPLES_DIR} "${CMAKE_BINARY_DIR}/examples")
+    add_subdirectory(${EXAMPLES_DIR})
 elseif(${BUILD_TESTS})
     message(STATUS "Building tests...")
     #Tests
-    add_subdirectory(${TESTS_DIR} "${CMAKE_BINARY_DIR}/test")
+    add_subdirectory(${TESTS_DIR})
 endif()
 
 #Collect Sources and make a library and its components
-add_subdirectory(${INCLUDE_DIR} "${CMAKE_BINARY_DIR}/include")
-add_subdirectory(${SOURCE_DIR} "${CMAKE_BINARY_DIR}/src")
+add_subdirectory(${INCLUDE_DIR})
+add_subdirectory(${SOURCE_DIR})
 
 add_library(${PROJECT_NAME} INTERFACE)
 target_link_libraries(${PROJECT_NAME} INTERFACE Core)
