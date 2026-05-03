@@ -1,6 +1,8 @@
-﻿set(FETCHCONTENT_BASE_DIR ${CMAKE_BINARY_DIR}/examples/deps)
-include(FetchContent)
+﻿#Set directory to where dependencies download
+set(FETCHCONTENT_BASE_DIR ${CMAKE_BINARY_DIR}/examples/deps)
 
+include(FetchContent)
+#if SFML not found - we must download it for convenience
 if(NOT SFML_FOUND)
     message(STATUS "SFML not found - downloading dependency")
     FetchContent_Declare(
@@ -10,7 +12,6 @@ if(NOT SFML_FOUND)
         GIT_SHALLOW    TRUE
     )
     #Set options for SFML
-    set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
     set(SFML_BUILD_AUDIO OFF CACHE BOOL "" FORCE)
     set(SFML_BUILD_NETWORK OFF CACHE BOOL "" FORCE)
     set(SFML_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
