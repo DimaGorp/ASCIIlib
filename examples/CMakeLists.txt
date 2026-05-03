@@ -1,6 +1,4 @@
-﻿#Set Runtime output directory for Examples
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/examples/${PROJECT_NAME})
-#Various Examples
+﻿#Various Examples
 option(CONSOLE_APP "CLI Example" ON)
 option(SFML_APP "Compatability with SFML" ON)
 # if it is an Example
