@@ -76,7 +76,7 @@ install(DIRECTORY ${INCLUDE_DIR}/
         )
 #Create files with IMPORT TARGETS
 install(EXPORT ${PROJECT_NAME}Targets
-        DESTINATION ${CMAKE_INSTALL_PREFIX}/cmake/${PROJECT_NAME}
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
         NAMESPACE ${PROJECT_NAME}::
 )
 
@@ -88,7 +88,7 @@ configure_package_config_file(
         ${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
         #Destination where to copy ASCIIlibConfig.cmake
         INSTALL_DESTINATION
-        ${CMAKE_INSTALL_PREFIX}/cmake/${PROJECT_NAME}
+        ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
 )
 
 write_basic_package_version_file(
@@ -105,5 +105,5 @@ install(
                 ${PROJECT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
         DESTINATION
                 #Where to Copy it
-                ${CMAKE_INSTALL_PREFIX}/cmake/${PROJECT_NAME}
+                ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
         )
