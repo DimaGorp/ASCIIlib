@@ -1,6 +1,11 @@
-﻿project(SFML LANGUAGES CXX)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/examples/${PROJECT_NAME})
-add_executable(${PROJECT_NAME} main.cpp)
+﻿project(SFMLExample LANGUAGES CXX)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE ASCIIlib SFML::Graphics)
-target_include_directories(${PROJECT_NAME} PUBLIC ${INCLUDE_DIR} ${CMAKE_BINARY_DIR}/examples)
+add_executable(SFMLExample main.cpp)
+#Link SFML
+target_link_libraries(SFMLExample PRIVATE ASCIIlib::Core SFML::Graphics)
+
+target_include_directories(SFMLExample PUBLIC ${INCLUDE_DIR} ${CMAKE_BINARY_DIR}/examples)
+#if SFML was found or downloaded we create macro to use SFML constructions
+if(${SFML_FOUND})
+    target_compile_definitions(SFMLExample PRIVATE SFML_FOUND)
+endif()
