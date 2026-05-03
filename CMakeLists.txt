@@ -61,27 +61,49 @@ include(GNUInstallDirs)
 # Copy Library to install destination
 install(TARGETS Core
         EXPORT ${PROJECT_NAME}Targets
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-        INCLUDES DESTINATION ${CMAKE_INSTALL_INLUDEDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}/${PROJECT_NAME}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}/${PROJECT_NAME}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}/${PROJECT_NAME}
+        INCLUDES DESTINATION ${CMAKE_INSTALL_INLUDEDIR}/${PROJECT_NAME}
         )
 
 # Copy Header Files to install destination
 install(DIRECTORY ${INCLUDE_DIR}/
-        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}
         FILES_MATCHING
-        PATTERN "*.hpp"
+        PATTERN *.hpp
+        PATTERN *.h
         )
-#[[==
-#Export and Create Config file
-install(EXPORT ${PROJECT_NAME}Targets 
-        FILE ASCIIlibConfig.cmake
-        DESTINATION ${CMAKE_INSTALL_PREFIX}/share/${PROJECT_NAME}/cmake
-        NAMESPACE ASCII::
+#Create files with IMPORT TARGETS
+install(EXPORT ${PROJECT_NAME}Targets
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/cmake/${PROJECT_NAME}
+        NAMESPACE ${PROJECT_NAME}::
 )
-#==]]
 
+include(CMakePackageConfigHelpers)
 
 #Create Config for Finding Library via find_package()
-include(CMakePackageConfigHelpers)
+configure_package_config_file(
+        ${PROJECT_SOURCE_DIR}/cmake/${PROJECT_NAME}Config.cmake.in
+        ${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
+        #Destination where to copy ASCIIlibConfig.cmake
+        INSTALL_DESTINATION
+        ${CMAKE_INSTALL_PREFIX}/cmake/${PROJECT_NAME}
+)
+
+write_basic_package_version_file(
+        ${PROJECT_NAME}ConfigVersion.cmake
+        VERSION ${PROJECT_VERSION}
+        COMPATIBILITY SameMajorVersion
+)
+
+#Copy Config and ConfigVersion to install destination
+
+install(
+        FILES 
+                ${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
+                ${PROJECT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
+        DESTINATION
+                #Where to Copy it
+                ${CMAKE_INSTALL_PREFIX}/cmake/${PROJECT_NAME}
+        )
