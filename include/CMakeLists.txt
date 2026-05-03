@@ -12,7 +12,7 @@ target_include_directories(
         #Use that directory if we are installing library
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
     PRIVATE
-        $<BUILD_INTERFACE:${SOURCE_DIR}>
+        $<BUILD_INTERFACE:${INCLUDE_DIR}/Core>
 
 )
 

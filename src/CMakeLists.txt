@@ -2,7 +2,7 @@
 target_sources(
           Core
      PRIVATE
-          ${SOURCE_DIR}/ASKII.cpp
+          ${SOURCE_DIR}/Core/ASKII.cpp
      )
 #use C++20 Standart
 target_compile_features(
