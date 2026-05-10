@@ -11,9 +11,11 @@ target_include_directories(
         $<BUILD_INTERFACE:${INCLUDE_DIR}>
         #Use that directory if we are installing library
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+
+        $<BUILD_INTERFACE:${INCLUDE_DIR}/Interfaces>
     PRIVATE
         $<BUILD_INTERFACE:${INCLUDE_DIR}/Core>
-
+        $<BUILD_INTERFACE:${INCLUDE_DIR}/Core/Styles>
 )
 
 #Alias for Core Library

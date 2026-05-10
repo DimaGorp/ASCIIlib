@@ -29,7 +29,7 @@ endif()
 #Set up Build Type
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release
-        CACHE STRING "Choose the type of build (Debug or Release)" FORCE)
+        CACHE STRING "Choose the type of build (Debug or Release)")
 endif()
 #Set the project name and languages
 project(ASCIIlib 
