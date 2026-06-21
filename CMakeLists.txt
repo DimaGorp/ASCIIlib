@@ -29,13 +29,17 @@ endif()
 #Set up Build Type
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release
-        CACHE STRING "Choose the type of build (Debug or Release)" FORCE)
+        CACHE STRING "Choose the type of build (Debug or Release)")
 endif()
 #Set the project name and languages
 project(ASCIIlib 
             VERSION 0.0.1
             LANGUAGES CXX
         )
+
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 
 #Build externals
@@ -49,9 +53,7 @@ elseif(${BUILD_TESTS})
     add_subdirectory(${TESTS_DIR})
 endif()
 
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
 
 #Use it when we are on Windows
 if(MSVC)
@@ -68,7 +70,7 @@ include(GNUInstallDirs)
 # Specify Install rules for Library
 
 # Copy Library to install destination
-install(TARGETS Core
+install(TARGETS Image
         EXPORT ${PROJECT_NAME}Targets
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
