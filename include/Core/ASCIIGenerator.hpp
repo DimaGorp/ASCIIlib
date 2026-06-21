@@ -1,8 +1,10 @@
 #pragma once 
 #include <ASCII/IASCIIGenerator.hpp>
+#include <Adapters/IImage.hpp>
 #include <sstream>
 #include <string_view>
 #include <string>
+#include <functional>
 namespace ASCII 
 {
 

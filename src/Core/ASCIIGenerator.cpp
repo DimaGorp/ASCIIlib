@@ -4,6 +4,7 @@
 namespace ASCII
 {
     ImageASCIIGenerator::ImageASCIIGenerator(
+        std::function<ImageAdapter()> getImage,
         const std::string_view& mapper,
         const float& ratio,
         const std::pair<unsigned int,unsigned int>& CELL_SIZE
@@ -21,11 +22,11 @@ namespace ASCII
 
     std::ostringstream&& ImageASCIIGenerator::GetArt(){
         ImageAdapter adapter;
-        adapter.image_size = std::make_pair(m_imgAdapter.image_size.first, m_imgAdapter.image_size.second * m_ratio)
+        adapter.image_size = std::make_pair(m_imgAdapter.image_size.first, m_imgAdapter.image_size.second * m_ratio);
         
         
          //Convert image to grayscale version
-        int *grayscaled_img;// = FreeImage_ConvertToGreyscale(resized);
+        int* grayscaled_img;// = FreeImage_ConvertToGreyscale(resized);
         
         /*
             Map each pixel with corresponding character:

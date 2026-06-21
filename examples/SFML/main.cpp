@@ -1,12 +1,12 @@
 #include <iostream>
 #include <Config.h>
 #include <Core/ASCIIGenerator.hpp>
-#ifdef SFML_FOUND
+#ifdef SFML
     #include <SFML/Graphics.hpp>
 #endif
 int main()
 {
-    #ifdef SFML_FOUND
+    #ifdef SFML
         try{
             sf::Image image;
             if(!image.loadFromFile(std::string(RESOURCES_DIR)+"/image.png")){
@@ -16,8 +16,8 @@ int main()
             
             ASCII::ImageAdapter adapter;
             adapter.image_size = std::make_pair(image.getSize().x, image.getSize().y);
-            for (int i =0; i<image.getSize().y; i++) {
-                for (int j =0; j<image.getSize().x; j++) {
+            for (int i =0; i<image.getSize().x; i++) {
+                for (int j =0; j<image.getSize().y; j++) {
                     adapter.image.push_back(
                                             {
                                                 image.getPixel(sf::Vector2u(i,j)).r,
@@ -27,14 +27,15 @@ int main()
                                             );
                 }
             }
-            ASCII::ImageASCIIGenerator([&image]{
+            ASCII::ImageASCIIGenerator([&adapter]{
+                return adapter;
             }, "+- ");
             
         }catch(const std::exception& e){
             std::cout<<e.what()<<"\n";
         }
     #else
-        std::cout << "SFML NOT FOUND" << std::endl; 
+        std::cout << "SFML NOT AVALIABLE" << std::endl; 
     #endif
     return 0;
 }
