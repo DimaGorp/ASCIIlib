@@ -41,20 +41,6 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-
-#Build externals
-if(${BUILD_EXAMPLES})
-    message(STATUS "Building examples...")
-    #Examples
-    add_subdirectory(${EXAMPLES_DIR})
-elseif(${BUILD_TESTS})
-    message(STATUS "Building tests...")
-    #Tests
-    add_subdirectory(${TESTS_DIR})
-endif()
-
-
-
 #Use it when we are on Windows
 if(MSVC)
     set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
@@ -121,3 +107,15 @@ install(
                 #Where to Copy it
                 ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
         )
+        
+                
+#Build externals
+if(${BUILD_EXAMPLES})
+    message(STATUS "Building examples...")
+    #Examples
+    add_subdirectory(${EXAMPLES_DIR})
+elseif(${BUILD_TESTS})
+    message(STATUS "Building tests...")
+    #Tests
+    add_subdirectory(${TESTS_DIR})
+endif()

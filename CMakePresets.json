@@ -10,6 +10,18 @@
                 "CONSOLE_APP":false,
                 "SFML_APP":true
             }
+        },
+        {
+            "name": "build-raw",
+            "binaryDir": "${sourceDir}/build",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE":"Release",
+                "BUILD_EXAMPLES":false,
+                "CONSOLE_APP":false,
+                "SFML_APP":false,
+                "ADAPTERS_LIBRARY": false,
+                "SFML_ADAPTER": false
+            }
         }
     ]
 }
