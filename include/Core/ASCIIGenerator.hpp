@@ -7,21 +7,14 @@
 #include <functional>
 namespace ASCII 
 {
-
-    struct ImageAdapter{
-        struct Pixel{
-            unsigned short r{0},g{0},b{0};
-        };
-        std::vector<Pixel> image;
-        std::pair<unsigned short,unsigned short> image_size;
-    };
+    
     class ImageASCIIGenerator:public IASCIIGenerator
     {
         protected:
             //stream for outputted ASCII image
             std::ostringstream m_sout;
             //image
-            ImageAdapter m_imgAdapter;
+            std::unique_ptr<IImage> m_imgAdapter;
             //ratio
             float m_ratio;
             //Mapping symbols
@@ -35,7 +28,7 @@ namespace ASCII
              * @param ratio: scaling factor of an Image for mapping and Image, the bigger the ration - more place to map
              */
             ImageASCIIGenerator(
-                std::function<ImageAdapter()> getImage,
+                std::function<std::unique_ptr<IImage>()> getImage,
                 const std::string_view& mapper,
                 float const& ratio = 0.5f,
                 const std::pair<unsigned int,unsigned int>& cellSize = std::make_pair(20,24)

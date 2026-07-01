@@ -70,25 +70,28 @@ include(GNUInstallDirs)
 # Specify Install rules for Library
 
 # Copy Library to install destination
-install(TARGETS Image
+install(TARGETS img-generator
         EXPORT ${PROJECT_NAME}Targets
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
         INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+        COMPONENT Generators 
         )
 
 # Copy Header Files to install destination
 install(DIRECTORY ${INCLUDE_DIR}/
         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+        COMPONENT ImageSFML 
         FILES_MATCHING
         PATTERN *.hpp
         PATTERN *.h
-        )
 #Create files with IMPORT TARGETS
+        )
 install(EXPORT ${PROJECT_NAME}Targets
         DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
         NAMESPACE ${PROJECT_NAME}::
+        COMPONENT Generators 
 )
 
 include(CMakePackageConfigHelpers)
