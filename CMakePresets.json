@@ -2,13 +2,38 @@
     "version": 4,
     "configurePresets": [
         {
-            "name": "build-examples",
+            "name": "build-img-examples",
             "binaryDir": "${sourceDir}/build",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE":"Release",
                 "BUILD_EXAMPLES":true,
-                "CONSOLE_APP":true,
-                "SFML_APP":true
+                "CONSOLE_APP":false,
+                "SFML_APP":true,
+                "ADAPTERS_LIBRARY": true,
+                "IMAGE_ADAPTER": "SFML"
+            }
+        },
+        {
+            "name": "build-raw",
+            "binaryDir": "${sourceDir}/build",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE":"Release",
+                "BUILD_EXAMPLES":false,
+                "CONSOLE_APP":false,
+                "SFML_APP":false,
+                "ADAPTERS_LIBRARY": false
+            }
+        },
+        {
+            "name": "build-with-SFML",
+            "binaryDir": "${sourceDir}/build",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE":"Release",
+                "BUILD_EXAMPLES":false,
+                "CONSOLE_APP":false,
+                "SFML_APP":false,
+                "ADAPTERS_LIBRARY": true,
+                "IMAGE_ADAPTER": "SFML"
             }
         }
     ]

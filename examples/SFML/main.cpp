@@ -1,6 +1,7 @@
 #include <iostream>
 #include <Config.h>
 #include <Core/ASCIIGenerator.hpp>
+#include <Adapters/SFMLAdapter.hpp>
 #ifdef SFML
     #include <SFML/Graphics.hpp>
 #endif
@@ -13,24 +14,8 @@ int main()
                 throw "Failed to load image \"image.png\" \n";
             }
             printf("Successfully loaded image \"image.png\"\n \tImage\\ \n\t\tSize: %dX%d\n",image.getSize().x, image.getSize().y);
-            
-            ASCII::ImageAdapter adapter;
-            adapter.image_size = std::make_pair(image.getSize().x, image.getSize().y);
-            for (int i =0; i<image.getSize().x; i++) {
-                for (int j =0; j<image.getSize().y; j++) {
-                    adapter.image.push_back(
-                                            {
-                                                image.getPixel(sf::Vector2u(i,j)).r,
-                                                image.getPixel(sf::Vector2u(i,j)).g,
-                                                image.getPixel(sf::Vector2u(i,j)).b
-                                            }
-                                            );
-                }
-            }
-            ASCII::ImageASCIIGenerator([&adapter]{
-                return adapter;
-            }, "+- ");
-            
+            ASCII::ImageASCIIGenerator generator(new SFMLAdapter(image),"+- ");
+            generator.GetArt();
         }catch(const std::exception& e){
             std::cout<<e.what()<<"\n";
         }
