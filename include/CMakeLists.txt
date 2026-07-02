@@ -1,11 +1,10 @@
 option(ADAPTERS_LIBRARY "Library of Adapters" OFF)
-cmake_dependent_option(SFML_ADAPTER "SFML Library Image Adapter" OFF "ADAPTERS_LIBRARY" OFF)
-cmake_dependent_option(SDL_ADAPTER "SDL Library Image Adapter" OFF "ADAPTERS_LIBRARY" OFF)
+set(IMAGE_ADAPTER "SFML" CACHE STRING "Which image adapter to use")
+set_property(CACHE IMAGE_ADAPTER PROPERTY STRINGS SFML SDL)
 
 
 
-
-#Core Component
+#Image Component
 add_library(img-generator)
 
 # Use different directories
@@ -18,7 +17,8 @@ target_include_directories(
         $<BUILD_INTERFACE:${INCLUDE_DIR}>
         #Use that directory if we are installing library
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
-        $<BUILD_INTERFACE:${INCLUDE_DIR}/Interfaces>
+        $<BUILD_INTERFACE:${INCLUDE_DIR}/Interfaces/ASCII>
+         $<BUILD_INTERFACE:${INCLUDE_DIR}/Interfaces/Adapters>
     PRIVATE
         $<BUILD_INTERFACE:${INCLUDE_DIR}/Core>
 )

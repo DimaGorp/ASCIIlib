@@ -1,6 +1,6 @@
 #pragma once 
-#include <ASCII/IASCIIGenerator.hpp>
-#include <Adapters/IImage.hpp>
+#include <IASCIIGenerator.hpp>
+#include <IImage.hpp>
 #include <sstream>
 #include <string_view>
 #include <string>
@@ -21,14 +21,13 @@ namespace ASCII
             std::string_view m_mapper;
             //cell size;
             std::pair<unsigned int,unsigned int> m_cellSize;
-            
         public:
             virtual std::ostringstream&& GetArt() override;
             /**
              * @param ratio: scaling factor of an Image for mapping and Image, the bigger the ration - more place to map
              */
             ImageASCIIGenerator(
-                std::function<std::unique_ptr<IImage>()> getImage,
+                IImage* imageAdapter,
                 const std::string_view& mapper,
                 float const& ratio = 0.5f,
                 const std::pair<unsigned int,unsigned int>& cellSize = std::make_pair(20,24)

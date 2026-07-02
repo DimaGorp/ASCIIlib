@@ -3,7 +3,7 @@ if(ADAPTERS_LIBRARY)
     target_sources(
             img-adapters
         PRIVATE
-            $<$<BOOL:${SFML_ADAPTER}>:${SOURCE_DIR}/Adapters/SFMLAdapter.cpp>
+            $<$<STREQUAL:${IMAGE_ADAPTER},SFML>:${SOURCE_DIR}/Adapters/SFMLAdapter.cpp>
         )
     #use C++20 Standart
     target_compile_features(
@@ -11,9 +11,9 @@ if(ADAPTERS_LIBRARY)
         PUBLIC
             cxx_std_20
     )
-endif()
-if(SFML_ADAPTER)
-    #link SFML
-    find_package(SFML 3.0 COMPONENTS Graphics CONFIG REQUIRED)
-    target_link_libraries(img-adapters PRIVATE SFML::Graphics)
+    if(${IMAGE_ADAPTER} STREQUAL "SFML")
+        #link SFML
+        find_package(SFML 3.0 COMPONENTS Graphics CONFIG REQUIRED)
+        target_link_libraries(img-adapters PRIVATE SFML::Graphics)
+    endif()
 endif()

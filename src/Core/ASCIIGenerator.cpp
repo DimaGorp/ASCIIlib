@@ -4,7 +4,7 @@
 namespace ASCII
 {
     ImageASCIIGenerator::ImageASCIIGenerator(
-        std::function<std::unique_ptr<IImage>()> getImage,
+        IImage* imageAdapter,
         const std::string_view& mapper,
         const float& ratio,
         const std::pair<unsigned int,unsigned int>& CELL_SIZE
@@ -17,7 +17,7 @@ namespace ASCII
         m_cellSize(CELL_SIZE)
     {
         //Get Image
-        m_imgAdapter = getImage();
+        //m_imgAdapter = imageAdapter;
     }
 
     std::ostringstream&& ImageASCIIGenerator::GetArt(){
