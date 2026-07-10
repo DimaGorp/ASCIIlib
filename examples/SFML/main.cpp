@@ -2,6 +2,8 @@
 #include <Config.h>
 #include <Core/ASCIIGenerator.hpp>
 #include <Adapters/SFMLAdapter.hpp>
+#include <Core/Image/ImageGrayscaler.hpp>
+#include <Core/Image/NearestNeignbourImageScaler.hpp>
 #ifdef SFML
     #include <SFML/Graphics.hpp>
 #endif
@@ -14,8 +16,14 @@ int main()
                 throw "Failed to load image \"image.png\" \n";
             }
             printf("Successfully loaded image \"image.png\"\n \tImage\\ \n\t\tSize: %dX%d\n",image.getSize().x, image.getSize().y);
-            ASCII::ImageASCIIGenerator generator(new SFMLAdapter(image),"+- ");
-            generator.GetArt();
+            ASCII::ImageASCIIGenerator generator("+- ",new SFMLAdapter(image),
+                {
+                        new ASCII::NearestNeignbourImageScaler(0.5),
+                        new ASCII::ImageGrayscaler()
+                    }
+                        );
+            std::ostringstream out = generator.GetArt();
+            std::cout << out.str();
         }catch(const std::exception& e){
             std::cout<<e.what()<<"\n";
         }
