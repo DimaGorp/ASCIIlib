@@ -25,8 +25,11 @@ namespace ASCII
         std::vector<Pixel> pixels = m_imgAdapter->getImage();
         std::pair<short,short> image_size = m_imgAdapter->getImageSize();
         //check if any filters was applied
+        
+        
         if (!m_handlers.empty())
         {
+            //Apply nesessary filters
             for (auto& handler : m_handlers)
             {
                 handler->apply(pixels, image_size);
@@ -46,19 +49,18 @@ namespace ASCII
         };
         
         int avg =0;
-        int pixelIndex;
-        
         //split into sections
         for (unsigned short h = 0; h < image_size.second; h+=m_cellSize.first)
         {
             for (unsigned short w = 0; w < image_size.first; w+=m_cellSize.second)
             {
-                for (unsigned int x = h; x < h+ m_cellSize.first; x++)
+                avg = 0;
+                for (unsigned int x = h; x < h + m_cellSize.first && x < image_size.second; x++)
                 {
-                    for (unsigned int y = w; y < w + m_cellSize.second; y++)
+                    for (unsigned int y = w; y < w + m_cellSize.second && y < image_size.first; y++)
                     {
-                        //FreeImage_GetPixelIndex(grayscaled_img, y, x, &pixelIndex);
-                        //avg+=pixelIndex;
+                        const Pixel& pixel = pixels.at(x * image_size.second + y);
+                        avg += pixel.r;
                     }
                 }
                 char symbol = mapToASCII(avg/(m_cellSize.first* m_cellSize.second));

@@ -12,14 +12,14 @@ int main()
     #ifdef SFML
         try{
             sf::Image image;
-            if(!image.loadFromFile(std::string(RESOURCES_DIR)+"/image.png")){
-                throw "Failed to load image \"image.png\" \n";
+            if(!image.loadFromFile(std::string(RESOURCES_DIR)+"/camera.png")){
+                throw "Failed to load image \"2.jpg\" \n";
             }
-            printf("Successfully loaded image \"image.png\"\n \tImage\\ \n\t\tSize: %dX%d\n",image.getSize().x, image.getSize().y);
+            printf("Successfully loaded image \"2.jpg\"\n \tImage\\ \n\t\tSize: %dX%d\n",image.getSize().x, image.getSize().y);
             ASCII::ImageASCIIGenerator generator("+- ",new SFMLAdapter(image),
                 {
-                        new ASCII::NearestNeignbourImageScaler(0.5),
-                        new ASCII::ImageGrayscaler()
+                    new ASCII::ImageGrayscaler(),
+                    new ASCII::NearestNeignbourImageScaler(0.5)
                     }
                         );
             std::ostringstream out = generator.GetArt();

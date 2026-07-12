@@ -9,7 +9,7 @@ namespace ASCII
         public:
             NearestNeignbourImageScaler(float ratio = 0.5f)
             {
-                m_ratio = std::clamp(ratio,0.1f,1.0f);
+                m_ratio = std::max(ratio,0.1f);
             };
             virtual void apply(std::vector<Pixel>& image,std::pair<short, short>& image_size) override;
     };
