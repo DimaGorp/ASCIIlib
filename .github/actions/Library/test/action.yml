@@ -1,0 +1,19 @@
+﻿name: 'Test'
+description: 'Run tests'
+
+inputs:
+  build_type:
+    description: 'Build type'
+    required: true
+  build_output_dir:
+    description: 'Build output directory'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Run tests
+      shell: bash
+      run: |
+        cd "${{ inputs.build_output_dir }}"
+        ctest --build-config "${{ inputs.build_type }}" --output-on-failure

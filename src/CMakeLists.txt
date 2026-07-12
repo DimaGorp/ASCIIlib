@@ -1,4 +1,2 @@
-﻿set(SOURCES
-     "${SOURCE_DIR}/ASKII.cpp"
-     PARENT_SCOPE
-)
+﻿add_subdirectory(Core)
+add_subdirectory(Adapters)
