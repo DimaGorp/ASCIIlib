@@ -19,7 +19,7 @@ int main()
             ASCII::ImageASCIIGenerator generator("+- ",new SFMLAdapter(image),
                 {
                     new ASCII::ImageGrayscaler(),
-                    new ASCII::NearestNeignbourImageScaler(0.5)
+                    new ASCII::NearestNeignbourImageScaler({image.getSize().x, image.getSize().y/2})
                     }
                         );
             std::ostringstream out = generator.GetArt();
