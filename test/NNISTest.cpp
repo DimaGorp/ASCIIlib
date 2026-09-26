@@ -1,17 +1,50 @@
 #include <gtest/gtest.h>
 #include <Core/Image/NearestNeignbourImageScaler.hpp>
-TEST(NeareastNeignbourImageScaler, Upscaling) {
 
-  //Inputs
-  std::vector<Pixel> input_img{
-    Pixel(1,1,1),Pixel(2,2,2),
-    Pixel(3,3,3),Pixel(4,4,4)
+
+TEST(NNIS, upscalingImage)
+{
+  // Arrange
+  std::pair<short,short> input_img_size ={2,2};
+  std::vector<Pixel> input_image = {
+    {1,1,1,},{2,2,2},
+    {3,3,3},{4,4,4}
   };
-  std::pair<short,short> input_img_size = std::make_pair<short,short>(2,2);
-  //Operation
-  ASCII::NearestNeignbourImageScaler ImageScaler({2,1});
-  ImageScaler.apply(input_img,input_img_size);
+  std::pair<short,short> expect_img_size ={4,4};
+  std::vector<Pixel> expect_image = {
+    {1,1,1,},{1,1,1},{2,2,2},{2,2,2},
+    {1,1,1,},{1,1,1},{2,2,2},{2,2,2},
+    {3,3,3},{3,3,3},{4,4,4},{4,4,4},
+    {3,3,3},{3,3,3},{4,4,4},{4,4,4}
+  };
+  //Act
+  ASCII::NearestNeignbourImageScaler ImageScaler(expect_img_size);
+  ImageScaler.apply(input_image,input_img_size);
   //Assertion
-  EXPECT_EQ(input_img_size, std::make_pair(2,1));
-  EXPECT_EQ(input_img,std::vector<Pixel>({Pixel(1,1,1),Pixel(2,2,2)}));
+  EXPECT_EQ(input_image,expect_image) << "Expected image is not the same as filtered one";
+  EXPECT_EQ(input_img_size,expect_img_size) << "Input image size does not match expected image size.";
+}
+
+TEST(NNIS, downcalingImage)
+{
+  // Arrange
+  std::pair<short,short> input_img_size ={4,4};
+  std::vector<Pixel> input_image = {
+    {1,1,1,},{1,1,1},{2,2,2},{2,2,2},
+    {1,1,1,},{1,1,1},{2,2,2},{2,2,2},
+    {3,3,3},{3,3,3},{4,4,4},{4,4,4},
+    {3,3,3},{3,3,3},{4,4,4},{4,4,4}
+  };
+  std::pair<short,short> expect_img_size ={2,2};
+  std::vector<Pixel> expect_image = {
+    {1,1,1,},{2,2,2},
+    {3,3,3},{4,4,4}
+  };
+  //Act
+  ASCII::NearestNeignbourImageScaler ImageScaler(expect_img_size);
+  ImageScaler.apply(input_image,input_img_size);
+  //Assertion
+  EXPECT_EQ(input_image,expect_image) << "Expected image is not the same as filtered one";
+  EXPECT_EQ(input_img_size,expect_img_size) << "Input image size does not match expected image size.";
+  
 }

@@ -26,7 +26,6 @@ namespace ASCII
         std::pair<short,short> image_size = m_imgAdapter->getImageSize();
         //check if any filters was applied
         
-        
         if (!m_handlers.empty())
         {
             //Apply nesessary filters
