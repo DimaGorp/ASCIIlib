@@ -7,7 +7,7 @@ namespace ASCII
         int grayscale;
         for (auto& pixel : image)
         {
-            grayscale= (pixel.r+pixel.g+pixel.b)/3;
+            grayscale= int(0.299*pixel.r + 0.587*pixel.g + 0.114*pixel.b);
             pixel.r=static_cast<unsigned short>(grayscale);
             pixel.g=static_cast<unsigned short>(grayscale);
             pixel.b=static_cast<unsigned short>(grayscale);

@@ -12,11 +12,11 @@ int main()
     #ifdef SFML
         try{
             sf::Image image;
-            if(!image.loadFromFile(std::string(RESOURCES_DIR)+"/camera.png")){
+            if(!image.loadFromFile(std::string(RESOURCES_DIR)+"homer.jpg")){
                 throw "Failed to load image \"2.jpg\" \n";
             }
             printf("Successfully loaded image \"2.jpg\"\n \tImage\\ \n\t\tSize: %dX%d\n",image.getSize().x, image.getSize().y);
-            ASCII::ImageASCIIGenerator generator("+- ",new SFMLAdapter(image),
+            ASCII::ImageASCIIGenerator generator("@%#*+",new SFMLAdapter(image),
                 {
                     new ASCII::ImageGrayscaler(),
                     new ASCII::NearestNeignbourImageScaler({image.getSize().x, image.getSize().y/2})

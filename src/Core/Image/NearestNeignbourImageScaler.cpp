@@ -15,11 +15,9 @@ namespace ASCII
         {
             for (int x = 0; x < m_img_size.first; ++x)
             {
-                int in_y = std::floor((y* image_size.first)*ratio_h);
-                int in_x = std::floor(x*ratio_w);
-                int out_y = y * m_img_size.first;
-                int out_x = x;
-                interpolated.at(out_y+out_x) = image.at(in_y + in_x);
+                int in_y = std::min(static_cast<int>(std::floor(y*ratio_h)),image_size.second-1);
+                int in_x = std::min(static_cast<int>(std::floor(x*ratio_w)),image_size.first-1);
+                interpolated.at(y * m_img_size.first + x) = image.at(in_y * image_size.first + in_x);
             }
         }
         image_size = m_img_size;

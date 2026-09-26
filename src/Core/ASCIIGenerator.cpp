@@ -48,23 +48,26 @@ namespace ASCII
         };
         
         int avg =0;
+        int count = 0;
         //split into sections
         for (unsigned short h = 0; h < image_size.second; h+=m_cellSize.first)
         {
             for (unsigned short w = 0; w < image_size.first; w+=m_cellSize.second)
             {
+                count= 0;
                 avg = 0;
                 for (unsigned int x = h; x < h + m_cellSize.first && x < image_size.second; x++)
                 {
                     for (unsigned int y = w; y < w + m_cellSize.second && y < image_size.first; y++)
                     {
-                        const Pixel& pixel = pixels.at(x * image_size.second + y);
+                        count++;
+                        const Pixel& pixel = pixels.at(x * image_size.first + y);
+                        //In grayscale image all channels are the same value so it does not matter which channel to choose
                         avg += pixel.r;
                     }
                 }
-                char symbol = mapToASCII(avg/(m_cellSize.first* m_cellSize.second));
+                char symbol = mapToASCII(avg/count);
                 m_sout << symbol;
-                avg =0;
             }
             m_sout << "\n";
         }

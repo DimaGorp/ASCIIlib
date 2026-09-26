@@ -114,7 +114,8 @@ if(${BUILD_EXAMPLES})
     message(STATUS "Building examples...")
     #Examples
     add_subdirectory(${EXAMPLES_DIR})
-elseif(${BUILD_TESTS})
+endif()
+if(${BUILD_TESTS})
     message(STATUS "Building tests...")
     #Tests
     enable_testing()
