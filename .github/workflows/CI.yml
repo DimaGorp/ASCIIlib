@@ -30,7 +30,7 @@ jobs:
           echo "Unit Tests Ran"
   collect-artifacts:
     needs: [build,test]
-    runs: windows-latest
+    runs-on: windows-latest
     steps:
       - name: Collect Artifacts
         run: |
