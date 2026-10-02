@@ -1,7 +1,8 @@
 ﻿name: CI
 on:
-  branches:
-    - "*"
+  push:
+    branches:
+      - "*"
   workflow_call:
 env:
   branches:
