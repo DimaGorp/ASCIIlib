@@ -19,11 +19,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Deploy a library
-        if: ${GITHUB_REF##*/} == $default-branch
+        if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
         run: |
           echo "Prod"
       - name: Deploy library(Staging)
-        if: ${GITHUB_REF##*/} != $default-branch
+        if: github.ref != format('refs/heads/{0}', github.event.repository.default_branch)
         run: |
           echo "Stage"
           
