@@ -14,7 +14,9 @@ defaults:
     
 
 jobs:
+  if: ${GITHUB_REF##*/} == ${{github.event.repository.default_branch}}
   deploy:
     steps:
-      if: ${GITHUB_REF##*/} == ${{github.event.repository.default_branch}}
-      echo "Prod"
+      - name: Deploy a library
+        run: |
+          echo "Prod"
