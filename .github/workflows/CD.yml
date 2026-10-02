@@ -1,8 +1,7 @@
 name: CD
 on:
   push:
-    branches: 
-      - "*"
+    branches: $default_branch
 
 jobs:
   collect_binaries:
