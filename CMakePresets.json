@@ -2,13 +2,53 @@
     "version": 4,
     "configurePresets": [
         {
-            "name": "build-examples",
+            "name": "Debug-lib-full",
+            "binaryDir": "${sourceDir}/build",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE":"Debug",
+                "BUILD_EXAMPLES":true,
+                "BUILD_TESTS": true,
+                "CONSOLE_APP":true,
+                "SFML_APP":true,
+                "ADAPTERS_LIBRARY": true,
+                "IMAGE_ADAPTER": "SFML"
+            }
+        },
+        {
+            "name": "Debug-lib",
+            "binaryDir": "${sourceDir}/build",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE":"Debug",
+                "BUILD_EXAMPLES":false,
+                "BUILD_TESTS": false,
+                "CONSOLE_APP":false,
+                "SFML_APP":false,
+                "ADAPTERS_LIBRARY": false
+            }
+        },
+        {
+            "name": "Debug-tests-lib",
+            "binaryDir": "${sourceDir}/build",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE":"Debug",
+                "BUILD_EXAMPLES":false,
+                "BUILD_TESTS": true,
+                "CONSOLE_APP":false,
+                "SFML_APP":false,
+                "ADAPTERS_LIBRARY": false,
+                "IMAGE_ADAPTER": "SFML"
+            }
+        },
+        {
+            "name": "Debug-example-SFML",
             "binaryDir": "${sourceDir}/build",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE":"Release",
-                "BUILD_EXAMPLES":true,
-                "CONSOLE_APP":true,
-                "SFML_APP":true
+                "BUILD_EXAMPLES":false,
+                "CONSOLE_APP":false,
+                "SFML_APP":false,
+                "ADAPTERS_LIBRARY": true,
+                "IMAGE_ADAPTER": "SFML"
             }
         }
     ]

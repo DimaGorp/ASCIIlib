@@ -29,25 +29,13 @@ endif()
 #Set up Build Type
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release
-        CACHE STRING "Choose the type of build (Debug or Release)" FORCE)
+        CACHE STRING "Choose the type of build (Debug or Release)")
 endif()
 #Set the project name and languages
 project(ASCIIlib 
             VERSION 0.0.1
             LANGUAGES CXX
         )
-
-
-#Build externals
-if(${BUILD_EXAMPLES})
-    message(STATUS "Building examples...")
-    #Examples
-    add_subdirectory(${EXAMPLES_DIR})
-elseif(${BUILD_TESTS})
-    message(STATUS "Building tests...")
-    #Tests
-    add_subdirectory(${TESTS_DIR})
-endif()
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
@@ -68,25 +56,28 @@ include(GNUInstallDirs)
 # Specify Install rules for Library
 
 # Copy Library to install destination
-install(TARGETS Core
+install(TARGETS img-generator
         EXPORT ${PROJECT_NAME}Targets
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
         INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+        COMPONENT Generators 
         )
 
 # Copy Header Files to install destination
 install(DIRECTORY ${INCLUDE_DIR}/
         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+        COMPONENT ImageSFML 
         FILES_MATCHING
         PATTERN *.hpp
         PATTERN *.h
-        )
 #Create files with IMPORT TARGETS
+        )
 install(EXPORT ${PROJECT_NAME}Targets
         DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
         NAMESPACE ${PROJECT_NAME}::
+        COMPONENT Generators 
 )
 
 include(CMakePackageConfigHelpers)
@@ -116,3 +107,17 @@ install(
                 #Where to Copy it
                 ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
         )
+        
+                
+#Build externals
+if(${BUILD_EXAMPLES})
+    message(STATUS "Building examples...")
+    #Examples
+    add_subdirectory(${EXAMPLES_DIR})
+endif()
+if(${BUILD_TESTS})
+    message(STATUS "Building tests...")
+    #Tests
+    enable_testing()
+    add_subdirectory(${TESTS_DIR})
+endif()
