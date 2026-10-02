@@ -6,7 +6,7 @@ on:
 
 jobs:
   collect_binaries:
-    - uses: ./CI.yml
+    - uses: ./.github/workflows/CI.yml
   deploy:
     needs: collect_binaries
     runs-on: windows-latest
