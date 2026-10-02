@@ -1,22 +1,19 @@
 ﻿name: CI
 on:
-  workflow_dispatch:
   push:
-    branches:  
-      - '!develop'
-      - 'feature/**'
-  pull_request:
-    branches: 
-      - 'develop'
-      - '!feature/**'
+    branches: *
+env:
+  branches:
+    develop
+    feature
+    release
 defaults:
   run:
     shell: bash
     
 
 jobs:
-  build-library:
-    uses: ./.github/workflows/library.yml
-  test-library:
-    needs: build-library
-    uses: ./.github/workflows/test.yml
+  deploy:
+    steps:
+      if: ${GITHUB_REF##*/} == ${{github.event.repository.default_branch}}
+      echo "Prod"
