@@ -5,7 +5,7 @@ on:
 
 jobs:
   collect_binaries:
-    uses: ./CI
+    - uses: ./CI.yml
   deploy:
     needs: collect_binaries
     runs-on: windows-latest

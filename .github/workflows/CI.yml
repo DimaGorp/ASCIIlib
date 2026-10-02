@@ -1,8 +1,5 @@
 ﻿name: CI
 on:
-  push:
-    branches: 
-      - "*"
   workflow_call:
 env:
   branches:
@@ -18,15 +15,9 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Deploy a library
-        if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+      - name: Build lib
         run: |
-          echo "Prod"
-      - name: Deploy library(Staging)
-        if: github.ref != format('refs/heads/{0}', github.event.repository.default_branch)
-        run: |
-          echo "Stage"
+          echo "Build"
   test:
     needs: build
     runs-on: windows-latest
