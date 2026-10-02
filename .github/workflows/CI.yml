@@ -27,7 +27,14 @@ jobs:
     steps:
       - name: Run Unit Tests
         run: |
-          echo "Unit Tests Ran" 
+          echo "Unit Tests Ran"
+  collect-artifacts:
+    needs: [build,test]
+    runs: windows-latest
+    steps:
+      - name: Collect Artifacts
+        run: |
+          echo "Artifacts Collected"  
           
 
       
