@@ -1,8 +1,8 @@
 ﻿name: CI
 on:
-  workflow_call:
   branches:
     - "*"
+  workflow_call:
 env:
   branches:
     develop
