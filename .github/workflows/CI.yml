@@ -31,26 +31,7 @@ jobs:
       - name: Collect Artifacts
         run: |
           echo "Artifacts Collected"
-  deploy-staging:
-    needs: collect-artifacts
-    if: startsWith(github.ref, 'refs/heads/release/') || startsWith(github.ref, 'refs/tags/release')
-    runs-on: windows-latest
-    environment: Staging
-    steps:
-    - uses: actions/checkout@v4
-    - name: Deploy library
-      run: |
-        echo "Stage"
-  deploy-development:
-    needs: collect-artifacts
-    if: startsWith(github.ref, 'ref/head/release/')!=true || contains(github.ref, '/tags/release')!=true || ${{github.ref != 'refs/heads/$default_branch'}}
-    runs-on: windows-latest
-    environment: Development
-    steps:
-    - uses: actions/checkout@v4
-    - name: Deploy library
-      run: |
-        echo "development"  
+
           
 
       
