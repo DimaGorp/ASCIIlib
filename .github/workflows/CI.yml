@@ -4,11 +4,7 @@ on:
     branches:
       - "*"
   #workflow_call:
-env:
-  branches:
-    develop
-    feature
-    release
+
 defaults:
   run:
     shell: bash
