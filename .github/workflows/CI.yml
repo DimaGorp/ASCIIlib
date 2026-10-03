@@ -34,7 +34,7 @@ jobs:
   deploy-staging:
     needs: collect-artifacts
     runs-on: windows-latest
-    enviroment: Staging
+    environment: Staging
     steps:
     - uses: actions/checkout@v4
     - name: Deploy library
@@ -44,7 +44,7 @@ jobs:
   deploy-development:
     needs: collect-artifacts
     runs-on: windows-latest
-    enviroment: Development
+    environment: Development
     steps:
     - uses: actions/checkout@v4
     - name: Deploy library

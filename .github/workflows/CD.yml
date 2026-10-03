@@ -9,7 +9,7 @@ jobs:
   deploy-production:
     needs: collect_binaries
     runs-on: windows-latest
-    enviroment: Production
+    environment: Production
     steps:
       - uses: actions/checkout@v4
       - name: Deploy a library
