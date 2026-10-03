@@ -52,7 +52,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Deploy library
-      if: !startsWith(github.ref, 'ref/head/release/') || !contains(github.ref, '/tags/release') || ${{github.ref != 'refs/heads/$default_branch'}}
+      if: !(startsWith(github.ref, 'ref/head/release/')) || !(contains(github.ref, '/tags/release')) || ${{github.ref != 'refs/heads/$default_branch'}}
       run: |
         echo "development"  
           
