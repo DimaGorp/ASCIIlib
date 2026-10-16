@@ -14,9 +14,14 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
+      - name: Chekout a repo
+        uses: actions/checkout@v4.2.2
       - name: Build lib
-        run: |
-          echo "Build"
+        uses: threeal/cmake-action@v2.1.0
+        with:
+          run-build: false
+          source-dir: ${{github.workspace}}
+          build-dir: ${{github.workspace}}/build
   test:
     needs: build
     runs-on: windows-latest
