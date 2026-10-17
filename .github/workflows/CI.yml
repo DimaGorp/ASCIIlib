@@ -48,7 +48,7 @@ jobs:
           key: ${{runner.os}}-build
       - name: Run Unit Tests
         run: |
-          dir Build/test
+          dir Build
         #uses: threeal/ctest-action@v1.1.0
         #with:
         #  test-dir: build/test
