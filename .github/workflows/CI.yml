@@ -12,8 +12,9 @@ defaults:
 
 jobs:
   build:
-    matrix:
-      os: windows-latest
+    strategy:
+      matrix:
+        os: windows-latest
 
     runs-on: ${{matrix.os}}
     steps:
