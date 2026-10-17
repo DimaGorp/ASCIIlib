@@ -26,7 +26,7 @@ jobs:
         uses: actions/cache/save@v6
         with:
           path: Build
-          keys: ${{runner.os}}-build
+          key: ${{runner.os}}-build
 
   test:
     needs: build
@@ -38,7 +38,7 @@ jobs:
         uses: actions/cache/restore@v6
         with:
           path: Build
-          keys: ${{runner.os}}-build
+          key: ${{runner.os}}-build
       - name: Run Unit Tests
         uses: threeal/ctest-action@v1.1.0
         with:
