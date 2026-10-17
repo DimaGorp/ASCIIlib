@@ -8,7 +8,7 @@ on:
 defaults:
   run:
     shell: bash
-    
+
 
 jobs:
   build:
@@ -19,16 +19,31 @@ jobs:
       - name: Build lib
         uses: threeal/cmake-action@v2.1.0
         with:
-          run-build: false
+          run-build: true
           source-dir: ${{github.workspace}}
           build-dir: ${{github.workspace}}/build
+      - name: Cache a build
+        uses: actions/cache/save@v6
+        with:
+          path: Build
+          keys: ${{runner.os}}-build
+
   test:
     needs: build
     runs-on: windows-latest
     steps:
+      - name: Chekout a repo
+        uses: actions/checkout@v4.2.2
+      - name: Get build from Cache 
+        uses: actions/cache/restore@v6
+        with:
+          path: Build
+          keys: ${{runner.os}}-build
       - name: Run Unit Tests
-        run: |
-          echo "Unit Tests Ran"
+        uses: threeal/ctest-action@v1.1.0
+        with:
+          test-dir: ${{github.workspace}}/build
+
   collect-artifacts:
     needs: [build,test]
     runs-on: windows-latest
