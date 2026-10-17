@@ -47,11 +47,9 @@ jobs:
           path: Build
           key: ${{runner.os}}-build
       - name: Run Unit Tests
-        run: |
-          dir Build
-        #uses: threeal/ctest-action@v1.1.0
-        #with:
-        #  test-dir: build/test
+        uses: threeal/ctest-action@v1.1.0
+        with:
+          test-dir: Build
 
   collect-artifacts:
     needs: [build,test]
