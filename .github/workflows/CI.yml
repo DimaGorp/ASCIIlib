@@ -53,6 +53,7 @@ jobs:
         uses: threeal/ctest-action@v1.1.0
         with:
           test-dir: Build
+          build-config: Debug
 
   collect-artifacts:
     needs: [build,test]
