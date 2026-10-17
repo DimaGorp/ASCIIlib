@@ -12,7 +12,10 @@ defaults:
 
 jobs:
   build:
-    runs-on: windows-latest
+    matrix:
+      os: windows-latest
+
+    runs-on: ${{matrix.os}}
     steps:
       - name: Chekout a repo
         uses: actions/checkout@v4.2.2
@@ -22,6 +25,9 @@ jobs:
           run-build: true
           source-dir: ${{github.workspace}}
           build-dir: ${{github.workspace}}/build
+          options: |
+            BUILD_TESTS=ON
+        #Cache for build
       - name: Cache a build
         uses: actions/cache/save@v6
         with:
@@ -40,12 +46,9 @@ jobs:
           path: Build
           key: ${{runner.os}}-build
       - name: Run Unit Tests
-        run: |
-          dir Build
-
-        #uses: threeal/ctest-action@v1.1.0
-        #with:
-          #test-dir: ${{github.workspace}}/build
+        uses: threeal/ctest-action@v1.1.0
+        with:
+          test-dir: Build
 
   collect-artifacts:
     needs: [build,test]
