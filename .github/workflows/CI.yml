@@ -46,6 +46,9 @@ jobs:
         with:
           path: Build
           key: ${{runner.os}}-build
+      - name: Chek Build folder
+        run: |
+          dir Build
       - name: Run Unit Tests
         uses: threeal/ctest-action@v1.1.0
         with:
