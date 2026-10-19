@@ -9,10 +9,10 @@ on:
 
 jobs:
   build:
-    uses: ./github/workflows/Build.yml
+    uses: ./.github/workflows/Build.yml
   test:
     needs: build
-    uses: ./github/workflows/Test.yml
+    uses: ./.github/workflows/Test.yml
 
   collect-artifacts:
     needs: [build,test]
