@@ -12,9 +12,7 @@ jobs:
     uses: ./.github/workflows/Build.yml
   test:
     needs: build
-    steps: 
-      - name: Test a Library
-        uses: ./.github/workflows/Test.yml
+    uses: ./.github/workflows/Test.yml
 
   collect-artifacts:
     needs: [build,test]
