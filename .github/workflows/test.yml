@@ -1,19 +1,24 @@
-﻿name: test.yml
+﻿name: Testing a Library
 on:
   workflow_call:
+  workflow_dispatch:
 
 jobs:
   unit-tests:
-    strategy:
-      matrix:
-        os: [ ubuntu-latest, windows-latest, macos-latest ]
-    runs-on: ${{ matrix.os }}
+    runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Run unit tests
-        uses: ./.github/actions/Library/test
-
-  integration-tests:
-    uses: DimaGorp/ASCIIlib_Usage_Example/.github/workflows/Testing.yml@master
-    with:
-      branch_from_clone: ${{ github.ref_name }}
+      - name: Chekout a repo
+        uses: actions/checkout@v4.2.2
+      - name: Build lib
+        uses: threeal/cmake-action@v2.1.0
+        with:
+          run-build: true
+          source-dir: ${{github.workspace}}
+          build-dir: ${{github.workspace}}/build
+          options: |
+            BUILD_TESTS=ON
+      - name: Run Unit Tests
+        uses: threeal/ctest-action@v1.1.0
+        with:
+          test-dir: ${{github.workspace}}/build
+          build-config: Debug
