@@ -10,6 +10,8 @@ jobs:
 
     runs-on: ${{matrix.os}}
     steps:
+      - name: Chekout a repo
+        uses: actions/checkout@v4.2.2
       - name: Build lib
         uses: threeal/cmake-action@v2.1.0
         with:
