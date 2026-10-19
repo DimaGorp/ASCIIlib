@@ -1,0 +1,16 @@
+name: CD
+on:
+  workflow_dispatch:
+
+jobs:
+  collect_binaries:
+    uses: ./.github/workflows/CI.yml
+  deploy-production:
+    needs: collect_binaries
+    runs-on: windows-latest
+    environment: Production
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy a library
+        run: |
+          echo "Prod"
