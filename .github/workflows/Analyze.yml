@@ -6,6 +6,7 @@ jobs:
     analysis:
         runs-on: ubuntu-latest
         steps:
-            - name: Analyze source code
-              run: |
-                echo "Code is analyzed"
+          - name: Analyze source code
+            uses: deep5050/cppcheck-action@main
+            with:
+              github_token: ${{ secrets.GITHUB_TOKEN}}
