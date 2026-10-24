@@ -23,7 +23,7 @@ jobs:
     steps:
       - name: Collect Artifacts
         run: |
-          echo "Artifacts Collected"
+          echo "Artifacts Collected Sucsesfully"
 
           
 
