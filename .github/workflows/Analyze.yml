@@ -6,6 +6,8 @@ jobs:
     analysis:
         runs-on: ubuntu-latest
         steps:
+          - name: Checkout a repo
+            uses: actions/checkout@v4.2.2
           - name: Analyze source code
             uses: deep5050/cppcheck-action@main
             with:
