@@ -1,0 +1,11 @@
+name: Analyze a code
+on:
+  workflow_call:
+  workflow_dispatch: 
+jobs:
+    analysis:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Analyze source code
+              run: |
+                echo "Code is analyzed"
