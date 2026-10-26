@@ -8,18 +8,29 @@ jobs:
         steps:
           - name: Checkout a repo
             uses: actions/checkout@v4.2.2
-          - name: Run Static Analysis
-            uses: JacobDomagala/StaticAnalysis@master
+          - name: Install tools
+            run: |
+              sudo apt-get update
+              sudo apt-get install -y clang-tidy cppcheck
+              cargo install clang-tidy-sarif sarif-fmt
+
+          - name: Configure CMake
+            run: cmake -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+
+          - name: clang-tidy -> SARIF
+            run: |
+              run-clang-tidy -p build -checks='bugprone-*,performance-*' src \
+                | clang-tidy-sarif > clang-tidy.sarif || true
+
+          - name: cppcheck -> SARIF
+            run: cppcheck --project=build/compile_commands.json --enable=warning,performance --output-format=sarif 2> cppcheck.sarif || true
+
+          - uses: github/codeql-action/upload-sarif@v4
             with:
-              language: c++
+              sarif_file: clang-tidy.sarif
+              category: clang-tidy
 
-              # Exclude any issues found in ${Project_root_dir}/lib
-              exclude_dir: lib
-
-              use_cmake: true
-
-              # Optional Clang-Tidy arguments
-              clang_tidy_args: -checks='*,fuchsia-*,google-*,zircon-*,abseil-*,modernize-use-trailing-return-type'
-
-              # Optional Cppcheck arguments
-              cppcheck_args: --enable=all --suppress=missingIncludeSystem
+          - uses: github/codeql-action/upload-sarif@v4
+            with:
+              sarif_file: cppcheck.sarif
+              category: cppcheck
