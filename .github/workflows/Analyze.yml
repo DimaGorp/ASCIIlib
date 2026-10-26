@@ -8,7 +8,18 @@ jobs:
         steps:
           - name: Checkout a repo
             uses: actions/checkout@v4.2.2
-          - name: Analyze source code
-            uses: deep5050/cppcheck-action@main
+          - name: Run Static Analysis
+            uses: JacobDomagala/StaticAnalysis@master
             with:
-              github_token: ${{ secrets.GITHUB_TOKEN}}
+              language: c++
+
+              # Exclude any issues found in ${Project_root_dir}/lib
+              exclude_dir: lib
+
+              use_cmake: true
+
+              # Optional Clang-Tidy arguments
+              clang_tidy_args: -checks='*,fuchsia-*,google-*,zircon-*,abseil-*,modernize-use-trailing-return-type'
+
+              # Optional Cppcheck arguments
+              cppcheck_args: --enable=all --suppress=missingIncludeSystem
