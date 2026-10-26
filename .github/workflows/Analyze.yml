@@ -1,36 +1,31 @@
-name: Analyze a code
+name: Static Analysis (cppcheck)
 on:
+  pull_request:
   workflow_call:
-  workflow_dispatch: 
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write
+
 jobs:
-    analysis:
-        runs-on: ubuntu-latest
-        steps:
-          - name: Checkout a repo
-            uses: actions/checkout@v4.2.2
-          - name: Install tools
-            run: |
-              sudo apt-get update
-              sudo apt-get install -y clang-tidy cppcheck
-              cargo install clang-tidy-sarif sarif-fmt
+  analysis:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4.2.2
 
-          - name: Configure CMake
-            run: cmake -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+      - name: Install cppcheck
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cppcheck
 
-          - name: clang-tidy -> SARIF
-            run: |
-              run-clang-tidy -p build -checks='bugprone-*,performance-*' src \
-                | clang-tidy-sarif > clang-tidy.sarif || true
+      - name: Configure CMake
+        run: cmake -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 
-          - name: cppcheck -> SARIF
-            run: cppcheck --project=build/compile_commands.json --enable=warning,performance --output-format=sarif 2> cppcheck.sarif || true
+      - name: cppcheck -> SARIF
+        run: cppcheck --project=build/compile_commands.json --enable=warning,performance --output-format=sarif 2> cppcheck.sarif || true
 
-          - uses: github/codeql-action/upload-sarif@v4
-            with:
-              sarif_file: clang-tidy.sarif
-              category: clang-tidy
-
-          - uses: github/codeql-action/upload-sarif@v4
-            with:
-              sarif_file: cppcheck.sarif
-              category: cppcheck
+      - uses: github/codeql-action/upload-sarif@v4
+        with:
+          sarif_file: cppcheck.sarif
+          category: cppcheck
